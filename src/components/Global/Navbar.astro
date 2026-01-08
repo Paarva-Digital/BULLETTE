@@ -1,0 +1,219 @@
+<header
+  id="header"
+  class="fixed top-0 left-0 w-full z-50 transition-all duration-300 font-quicksand invisible"
+>
+  <div
+    class="sm:container mx-auto flex items-center justify-between
+           px-4 sm:px-6 py-3 md:py-4
+           bg-white sm:rounded-3xl sm:mt-3
+           border border-gray-200 shadow-sm"
+  >
+
+    <!-- Logo -->
+    <div class="flex items-center">
+      <img
+        src="/icons/LOGO-09.png"
+        alt="Bullette Logo"
+        class="w-36 lg:w-52 object-contain pointer-events-none"
+        loading="eager"
+      />
+    </div>
+
+    <!-- Desktop Nav -->
+    <nav
+      class="hidden md:flex items-center gap-10
+             text-gray-800 font-medium tracking-wide"
+    >
+      <a href="/" class="hover:text-red-600 transition">HOME</a>
+      <a href="/products/lighting" class="hover:text-red-600 transition">PRODUCTS</a>
+      <a href="/About" class="hover:text-red-600 transition">ABOUT US</a>
+      <a href="/blog" class="hover:text-red-600 transition">BLOG</a>
+    </nav>
+
+    <!-- CTA + Menu -->
+    <div class="flex items-center gap-2">
+       
+            <button id="theme-toggle" class="hover:text-red-600 bg-black hidden  transition lg:inline-flex items-center rounded-full w-fit h-15 border-none cursor-pointer">
+        <img
+      src="/icons/ULTRA-23.png"
+      alt="Ultra"
+      class="w-38"
+    />
+</button>
+      <!-- Download Brochure Button -->
+      <a
+        href="/brochure.pdf"
+        download
+        aria-label="Download brochure"
+        class="group hidden lg:flex items-center gap-3
+               text-gray-900 font-semibold
+               px-4 py-3 lg:px-7 lg:py-4
+               rounded-full 
+               bg-red-500
+               transition-all duration-300
+               hover:shadow-md hover:scale-[1.02]"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="currentColor"
+          class="w-6 h-6 text-yellow-300 group-hover:translate-y-0.5 transition"
+          viewBox="0 0 24 24"
+        >
+          <path d="M12 16l4-5h-3V4h-2v7H8l4 5zm8 2v2H4v-2h16z"/>
+        </svg>
+        <span class="flex text-yellow-300 uppercase font-medium">Download Brochure</span>
+      </a>
+
+      <!-- Mobile Menu Button -->
+      <button
+        id="menuIcon"
+        aria-label="open menu"
+        class="md:hidden rounded-lg p-1 hover:bg-gray-100 transition"
+      >
+        <img
+          src="/icons/hamburger.svg"
+          alt="Menu Icon"
+          class="w-8 h-8 pointer-events-none"
+        />
+      </button>
+
+    </div>
+  </div>
+</header>
+
+
+
+<!-- MODERN MINIMAL SIDEBAR -->
+<aside
+  id="sidebar"
+  class="fixed top-0 right-0 z-[9999] w-3/5 max-w-sm h-screen bg-white border-l border-gray-100 shadow-2xl translate-x-full transition-transform duration-500 ease-in-out will-change-transform"
+>
+  <!-- Close Button -->
+  <button
+    id="closesidebar"
+    class="absolute top-5 right-5 flex items-center justify-center w-10 h-10 rounded-full bg-gray-100 hover:bg-gray-200 transition-all"
+  >
+    <img src="/icons/X.svg" alt="Close Menu" class="w-6 h-6 pointer-events-none" />
+  </button>
+
+  <!-- Content Wrapper -->
+  <div class="flex flex-col justify-evenly h-full px-8 py-20 overflow-y-auto">
+    
+    <!-- Navigation -->
+    <nav class="flex flex-col space-y-8 text-2xl font-medium text-gray-800 font-quicksand">
+      <a href="/" class="hover:text-red-600 transition-colors">Home</a>
+      <a href="/products/lighting" class="hover:text-red-600 transition">Products</a>
+      <a href="/About" class="hover:text-red-600 transition-colors">About</a>
+            <a href="/UltraDark" class="hover:text-red-600 bg-black transition inline-flex items-center rounded-2xl w-fit h-14 border-none cursor-pointer">
+        <img
+      src="/icons/ULTRA-23.png"
+      alt="Ultra"
+      class="w-38"
+    />
+</a>
+    </nav>
+
+    <!-- Social Icons -->
+    <div class="flex justify-center gap-5">
+      <a href="https://www.facebook.com/"
+        class="flex items-center justify-center w-12 h-12 bg-gray-100 rounded-xl hover:bg-red-600 transition-all">
+        <img src="/icons/social/fb.png" alt="Facebook" class="w-6 h-6" />
+      </a>
+      <a href=""
+        class="flex items-center justify-center w-12 h-12 bg-gray-100 rounded-xl hover:bg-red-600 transition-all">
+        <img src="/icons/social/wtsp.png" alt="WhatsApp" class="w-6 h-6" />
+      </a>
+      <a href="https://www.instagram.com/"
+        class="flex items-center justify-center w-12 h-12 bg-gray-100 rounded-xl hover:bg-red-600 transition-all">
+        <img src="/icons/social/insta.png" alt="Instagram" class="w-6 h-6" />
+      </a>
+    </div>
+  </div>
+</aside>
+
+
+
+
+<script>
+import { gsap } from "gsap";
+
+const header = document.getElementById("header");
+const headerInner = header.querySelector(".sm\\:container");
+let lastScroll = 0;
+let isHidden = false;
+
+const isMobile = window.innerWidth < 640;
+
+// 🟢 Initial setup - hide header above viewport
+gsap.set(header, { 
+  y: -120, // Use fixed pixel value instead of percentage
+});
+
+// 🟢 Animate header slide-in on load
+window.addEventListener("load", () => {
+  const timeline = gsap.timeline({ delay: 0.2 }); // Small delay for better UX
+  
+  timeline
+    .to(header, { 
+      y: 0, // Slide to natural position
+      autoAlpha: 1, // Animates to opacity: 1 and visibility: visible
+      duration: 0.8,
+      ease: "power2.out" // Smooth, natural ease
+    })
+});
+
+// 🟢 Scroll hide/show
+window.addEventListener("scroll", () => {
+  const currentScroll = window.scrollY;
+
+  if (currentScroll < 100) {
+    gsap.to(header, { y: 0, autoAlpha: 1, duration: 0.8, ease: "power3.out" });
+    isHidden = false;
+    return;
+  }
+
+  if (currentScroll > lastScroll && !isHidden) {
+    gsap.to(header, { y: "-110%", autoAlpha: 0, duration: 0.8, ease: "power3.out" });
+    isHidden = true;
+  } else if (currentScroll < lastScroll && isHidden) {
+    gsap.to(header, { y: 0, autoAlpha: 1, duration: 0.8, ease: "power3.out" });
+    isHidden = false;
+  }
+
+  lastScroll = currentScroll;
+});
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const menuIcon = document.getElementById("menuIcon");
+    const sidebar = document.getElementById("sidebar");
+    const closesidebar = document.getElementById("closesidebar");
+    const body = document.body;
+
+    const openSidebar = () => {
+      sidebar.classList.remove("translate-x-full");
+      sidebar.classList.add("translate-x-0");
+      body.style.overflow = "hidden";
+    };
+
+    const closeSidebar = () => {
+      sidebar.classList.remove("translate-x-0");
+      sidebar.classList.add("translate-x-full");
+      body.style.overflow = "";
+    };
+
+    menuIcon?.addEventListener("click", openSidebar);
+    closesidebar?.addEventListener("click", closeSidebar);
+
+    document.addEventListener("click", (e) => {
+      if (!sidebar.contains(e.target) && !menuIcon.contains(e.target)) {
+        closeSidebar();
+      }
+    });
+  });
+
+</script>
+
+
+
+
+

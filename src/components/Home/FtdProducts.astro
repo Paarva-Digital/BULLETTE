@@ -1,0 +1,163 @@
+---
+const { section } = Astro.props;
+
+const heading = section?.heading ?? '';
+
+const products = (section?.products ?? []).map(p => ({
+  title: p.title,
+  subtitle: p.subtitle,
+  features: p.features,
+  image: p.image?.asset?.url || null,
+  link: p.product
+    ? `/products/${p.product.category}/${p.product.slug}`
+    : null,
+}));
+---
+
+
+{products.length > 0 && (
+<section class="w-full py-16 sm:py-20 bg-gray-50">
+  <div class="container mx-auto px-4 text-center">
+
+    <!-- Heading -->
+    {heading && (
+      <h2 class="text-3xl sm:text-4xl font-medium text-[#1c2b4a]">
+        {heading}
+      </h2>
+    )}
+
+    <div class="w-20 h-1 bg-yellow-300 mx-auto mt-4 rounded-full"></div>
+
+    <!-- Grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-8 mt-14">
+
+      {products.map((item, index) => (
+        <div
+          class="group perspective cursor-pointer w-full max-w-sm mx-auto"
+          key={item.link || index}
+
+        >
+          <div
+            class="card-3d relative h-[160px] sm:h-[290px] lg:h-[360px]
+                   transition-transform duration-700
+                   transform-style-preserve-3d
+                   group-hover:rotate-y-180"
+          >
+
+            <!-- FRONT -->
+            <div
+              class="absolute inset-0 bg-[#e01e26] text-white rounded-3xl shadow-lg
+                     flex flex-row sm:flex-col items-center justify-between sm:justify-center
+                     gap-4 sm:gap-0 p-4 sm:p-6 backface-hidden overflow-hidden"
+            >
+              <!-- Image -->
+              <div
+                class="rounded-2xl bg-white sm:bg-transparent p-3 sm:p-5
+                       shrink-0 grid place-items-center shadow-inner sm:shadow-none"
+              >
+                <img
+                  src={item.image}
+                  alt={item.title || "Featured product"}
+                  loading="lazy"
+                  class="w-24 h-24 sm:w-36 sm:h-36 md:w-52 md:h-52
+                         object-contain transition-transform duration-300
+                         group-hover:scale-110"
+                />
+              </div>
+
+              <!-- Text -->
+              <div class="flex flex-col items-start sm:items-center text-left sm:text-center flex-1">
+                <h3 class="text-base sm:text-lg md:text-xl font-semibold leading-snug sm:mt-2">
+                  {item.title}
+                </h3>
+
+                {item.subtitle && (
+                  <p class="text-yellow-300 text-sm sm:text-base font-medium mt-1">
+                    {item.subtitle}
+                  </p>
+                )}
+              </div>
+            </div>
+
+            <!-- BACK -->
+            <div
+              class="absolute inset-0 bg-white text-[#e01e26] rounded-3xl shadow-lg
+                     flex flex-col justify-center items-center
+                     px-5 sm:px-6 py-5 sm:py-6
+                     rotate-y-180 backface-hidden overflow-hidden"
+            >
+              <h3 class="text-lg sm:text-xl font-semibold mb-3 text-center">
+                {item.title}
+              </h3>
+
+              {item.features?.length > 0 && (
+                <ul class="text-gray-700 text-sm sm:text-base font-medium space-y-1 sm:space-y-2 text-center">
+                  {item.features.map((f, i) => (
+                    <li key={i}>• {f}</li>
+                  ))}
+                </ul>
+              )}
+
+              <!-- Plus Button -->
+              <a
+                href={item.link}
+                class="absolute bottom-4 right-4 sm:bottom-5 sm:right-5
+                       w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center
+                       bg-white border-2 border-[#e01e26] text-[#e01e26]
+                       rounded-full shadow-md transition-all duration-300
+                       hover:bg-[#e01e26] hover:text-white hover:scale-110"
+              >
+                <svg
+                  class="w-4 h-4 sm:w-5 sm:h-5 transition-transform duration-300 group-hover:rotate-90"
+                  viewBox="0 0 32 32"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M16 2 L16 30 M2 16 L30 16" />
+                </svg>
+              </a>
+            </div>
+
+          </div>
+        </div>
+      ))}
+
+    </div>
+  </div>
+</section>
+)}
+
+
+
+<style>
+.perspective {
+  perspective: 1000px;
+}
+.transform-style-preserve-3d {
+  transform-style: preserve-3d;
+}
+.backface-hidden {
+  backface-visibility: hidden;
+}
+.rotate-y-180 {
+  transform: rotateY(180deg);
+}
+
+/* Force both sides to align */
+.card-3d > div {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+/* Properly disable flip on touch devices */
+@media (hover: none) {
+  .card-3d {
+    transform: none !important;
+  }
+}
+
+</style>

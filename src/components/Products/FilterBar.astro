@@ -1,0 +1,153 @@
+---
+const { tags = [] } = Astro.props;
+const safeTags = tags.filter((t) => typeof t === "string" && t.length > 0);
+---
+
+<div class="container mx-auto px-5 lg:mt-5">
+
+  <!-- Filter Rail -->
+  <div
+    id="filter-bar"
+    class="
+      relative
+      flex gap-2
+      overflow-x-auto md:flex-wrap
+      pb-2
+      no-scrollbar
+    "
+  >
+    <!-- All -->
+    <button
+      class="
+        filter-chip
+        inline-flex items-center gap-2
+        shrink-0
+        rounded-xl
+        px-4 py-2
+        text-sm font-medium
+        bg-zinc-100 text-zinc-900
+        transition-all duration-200
+        hover:bg-white hover:border-zinc-200
+        border border-transparent
+        active
+      "
+      data-filter="all"
+    >
+      <span>All</span>
+      <span
+        class="
+          count
+          min-w-[22px] h-[22px]
+          px-1.5
+          rounded-full
+          bg-zinc-200
+          text-xs font-semibold
+          text-center leading-[22px]
+        "
+      >
+        0
+      </span>
+    </button>
+
+    {safeTags.map((tag) => (
+      <button
+        class="
+          filter-chip
+          inline-flex items-center gap-2
+          shrink-0
+          rounded-xl
+          px-4 py-2
+          text-sm font-medium
+          bg-zinc-100 text-zinc-900
+          transition-all duration-200
+          hover:bg-white hover:border-zinc-200
+          border border-transparent
+        "
+        data-filter={tag}
+      >
+        <span>
+          {tag.replace(/-/g, " ").replace(/\b\w/g, (l) => l.toUpperCase())}
+        </span>
+
+        <span
+          class="
+            count
+            min-w-[22px] h-[22px]
+            px-1.5
+            rounded-full
+            bg-zinc-200
+            text-xs font-semibold
+            text-center leading-[22px]
+          "
+        >
+          0
+        </span>
+      </button>
+    ))}
+  </div>
+
+</div>
+
+
+
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const chips = [...document.querySelectorAll(".filter-chip")];
+    const cards = [...document.querySelectorAll(".product-card")];
+
+    function updateCounts() {
+      chips.forEach((chip) => {
+        const filter = chip.dataset.filter;
+        const countEl = chip.querySelector(".count");
+
+        if (!countEl) return;
+
+        if (filter === "all") {
+          countEl.textContent = cards.length;
+          return;
+        }
+
+        const count = cards.filter((card) => {
+          const tag = card.dataset.tag || "";
+          return tag.split(",").includes(filter);
+        }).length;
+
+        countEl.textContent = count;
+      });
+    }
+
+    chips.forEach((chip) => {
+      chip.addEventListener("click", () => {
+        const filter = chip.dataset.filter;
+
+        chips.forEach((c) => c.classList.remove("active"));
+        chip.classList.add("active");
+
+        cards.forEach((card) => {
+          const tag = card.dataset.tag || "";
+          card.style.display =
+            filter === "all" || tag.split(",").includes(filter)
+              ? ""
+              : "none";
+        });
+      });
+    });
+
+    updateCounts();
+  });
+</script>
+
+<style>
+  .filter-chip.active {
+  background-color: #ef1923;
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+
+.filter-chip.active .count {
+  background-color: rgba(255, 255, 255, 0.25);
+  color: #ffffff;
+}
+
+</style>

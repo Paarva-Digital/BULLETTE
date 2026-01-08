@@ -1,0 +1,162 @@
+---
+const { section } = Astro.props;
+
+const posts = section?.posts ?? [];
+
+// Safety: we expect exactly 3 posts
+const [featured, second, third] = posts;
+---
+
+
+
+{posts.length >= 3 && (
+<section class="bg-white py-16 sm:py-20">
+  <div class="container mx-auto px-6">
+
+    <!-- Header -->
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6 mb-14">
+      <div>
+        <h2 class="text-3xl sm:text-4xl font-medium text-gray-900">
+          {section.heading}
+        </h2>
+        <p class="text-lg text-gray-600 mt-2 max-w-xl">
+          {section.subheading}
+        </p>
+      </div>
+
+      <a
+        href="/blog"
+        class="inline-flex items-center justify-center
+               px-6 py-3 rounded-full bg-red-600
+               text-white font-medium
+               hover:bg-yellow-400 transition"
+      >
+        View All
+      </a>
+    </div>
+
+    <!-- Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+      <!-- FEATURED CARD -->
+      <a
+        href={`/blog/${featured.slug.current}`}
+        class="group rounded-3xl overflow-hidden bg-white
+               shadow-sm hover:shadow-lg transition
+               flex flex-col lg:h-full"
+      >
+        <div class="relative h-48 sm:h-56 lg:aspect-[4/3] lg:h-auto overflow-hidden">
+          <img
+            src={featured.coverImage?.asset?.url}
+            alt={featured.title}
+            class="absolute inset-0 w-full h-full object-cover
+                   group-hover:scale-105 transition duration-500"
+          />
+        </div>
+
+        <div class="p-6 flex flex-col gap-4">
+          <h3 class="text-xl font-semibold text-gray-900">
+            {featured.title}
+          </h3>
+
+          <p class="text-gray-600">
+            {featured.excerpt}
+          </p>
+
+          <div class="flex items-center justify-between text-sm text-gray-500">
+            <span>{featured.author}</span>
+            <span>
+              {new Date(featured.publishedAt).toLocaleDateString()}
+            </span>
+          </div>
+
+          <span class="w-fit px-5 py-2 rounded-full bg-gray-100 text-sm font-medium">
+            Read More
+          </span>
+        </div>
+      </a>
+
+      <!-- RIGHT COLUMN -->
+      <div class="grid grid-cols-1 gap-8 lg:grid-rows-2 lg:col-span-2">
+
+        <!-- CARD 2 -->
+        <a
+          href={`/blog/${second.slug.current}`}
+          class="group rounded-3xl overflow-hidden bg-white
+                 shadow-sm hover:shadow-lg transition
+                 flex flex-col lg:flex-row lg:h-full"
+        >
+          <div class="relative h-48 lg:w-1/2 lg:h-full overflow-hidden">
+            <img
+              src={second.coverImage?.asset?.url}
+              alt={second.title}
+              class="absolute inset-0 w-full h-full object-cover
+                     group-hover:scale-105 transition duration-500"
+            />
+          </div>
+
+          <div class="p-6 flex flex-col gap-4">
+            <h3 class="text-lg font-semibold text-gray-900">
+              {second.title}
+            </h3>
+
+            <p class="text-gray-600">
+              {second.excerpt}
+            </p>
+
+            <div class="flex items-center justify-between text-sm text-gray-500">
+              <span>{second.author}</span>
+              <span>
+                {new Date(second.publishedAt).toLocaleDateString()}
+              </span>
+            </div>
+
+            <span class="w-fit px-5 py-2 rounded-full bg-red-600 text-white text-sm font-medium">
+              Read More
+            </span>
+          </div>
+        </a>
+
+        <!-- CARD 3 -->
+        <a
+          href={`/blog/${third.slug.current}`}
+          class="group rounded-3xl overflow-hidden bg-white
+                 shadow-sm hover:shadow-lg transition
+                 flex flex-col lg:flex-row lg:h-full"
+        >
+          <div class="relative h-48 lg:w-1/2 lg:h-full overflow-hidden">
+            <img
+              src={third.coverImage?.asset?.url}
+              alt={third.title}
+              class="absolute inset-0 w-full h-full object-cover
+                     group-hover:scale-105 transition duration-500"
+            />
+          </div>
+
+          <div class="p-6 flex flex-col gap-4">
+            <h3 class="text-lg font-semibold text-gray-900">
+              {third.title}
+            </h3>
+
+            <p class="text-gray-600">
+              {third.excerpt}
+            </p>
+
+            <div class="flex items-center justify-between text-sm text-gray-500">
+              <span>{third.author}</span>
+              <span>
+                {new Date(third.publishedAt).toLocaleDateString()}
+              </span>
+            </div>
+
+            <span class="w-fit px-5 py-2 rounded-full bg-red-600 text-white text-sm font-medium">
+              Read More
+            </span>
+          </div>
+        </a>
+
+      </div>
+    </div>
+  </div>
+</section>
+)}

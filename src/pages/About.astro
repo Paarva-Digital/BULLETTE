@@ -1,0 +1,564 @@
+---
+import Navbar from '../components/Global/Navbar.astro'
+import Layout from '../layouts/Layout.astro'
+import Footer from '../components/Global/Footer.astro'
+---
+
+<Layout>
+  <Navbar />
+
+<!-- ================= HERO (ENHANCED) ================= -->
+<section
+  class="relative bg-gray-50
+         pt-32 lg:pt-60 pb-10 md:pb-20 px-6 overflow-hidden"
+>
+
+  <!-- Background accents -->
+  <div class="absolute -top-32 left-1/4 w-lg h-128
+              bg-red-100/50 rounded-full blur-[140px]"></div>
+  <div class="absolute top-1/3 right-1/4 w-md h-112
+              bg-yellow-100/40 rounded-full blur-[160px]"></div>
+
+  <div class="relative max-w-7xl mx-auto">
+
+    <div class="max-w-4xl">
+
+      <span
+        class="inline-block mb-6 text-xs tracking-[0.35em]
+               uppercase text-red-600 font-medium"
+      >
+        About Bullette
+      </span>
+
+      <h1
+        class="text-3xl sm:text-6xl lg:text-7xl
+               font-semibold text-gray-900 leading-[1.1]"
+      >
+        Engineering Innovation.<br />
+        <span class="text-red-600">Manufacturing Trust.</span>
+      </h1>
+
+      <p
+        class="mt-8 max-w-3xl
+               text-lg sm:text-xl text-gray-600 leading-relaxed"
+      >
+        Bullette is a technology-driven manufacturing company delivering
+        precision-engineered electrical and electronic solutions —
+        built for reliability, scalability, and long-term performance.
+      </p>
+
+      <!-- Optional CTA space (future-ready) -->
+<div
+  class="mt-12 
+         flex flex-col sm:flex-row gap-4
+         justify-center lg:justify-start"
+>
+  <!-- Primary CTA -->
+<a
+  href="/products"
+  class="relative z-10
+         inline-flex items-center justify-center
+         h-12 px-8 rounded-full
+         bg-red-600
+         text-white font-semibold
+         leading-none
+         hover:bg-red-500 transition"
+>
+  Explore Products
+</a>
+
+  <!-- Secondary CTA -->
+<a
+  href="#vision"
+  class="relative z-10
+         inline-flex items-center justify-center
+         h-12 px-8 rounded-full
+         border border-gray-300
+         text-gray-800 font-medium
+         bg-white
+         hover:bg-gray-100 transition"
+>
+  Why Ultra
+</a>
+
+
+</div>
+
+
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ================= MANUFACTURING (ENHANCED) ================= -->
+<section class="relative bg-white py-10 lg:py-32 px-6 overflow-hidden">
+
+  <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-14 items-center">
+
+    <!-- ================= IMAGE BLOCK ================= -->
+    <div class="lg:col-span-7">
+      <div class="relative rounded-[2.5rem] overflow-hidden shadow-2xl">
+
+        <img
+          src="/images/Factory.png"
+          alt="Bullette Manufacturing Facility"
+          class="w-full h-120 object-cover"
+        />
+
+        <!-- Gradient overlay -->
+        <div class="absolute inset-0 bg-linear-to-tr
+                    from-black/30 via-transparent to-transparent"></div>
+
+        <!-- Caption -->
+        <div class="absolute bottom-6 left-6 bg-white/90 backdrop-blur
+                    rounded-xl px-5 py-3 shadow">
+          <p class="text-sm font-medium text-gray-900">
+            Advanced Manufacturing Facility
+          </p>
+          <p class="text-xs text-gray-600">
+            Precision-driven production environment
+          </p>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ================= CONTENT BLOCK ================= -->
+    <div class="lg:col-span-5">
+
+      <span
+        class="inline-block mb-4 text-xs tracking-[0.3em]
+               uppercase text-red-600 font-medium"
+      >
+        Manufacturing Excellence
+      </span>
+
+      <h2 class="text-3xl lg:text-4xl font-semibold text-gray-900">
+        State-of-the-Art<br />
+        Manufacturing
+      </h2>
+
+      <p class="mt-6 text-gray-600 leading-relaxed text-lg">
+        Our manufacturing infrastructure is engineered to meet global
+        standards — combining advanced machinery, controlled workflows,
+        and skilled professionals to ensure consistent excellence.
+      </p>
+
+      <!-- Feature List -->
+      <ul class="mt-10 space-y-5 text-gray-700">
+        <li class="flex gap-4 items-start">
+          <span class="mt-1 w-2 h-2 bg-red-600 rounded-full"></span>
+          Automated assembly and testing lines
+        </li>
+        <li class="flex gap-4 items-start">
+          <span class="mt-1 w-2 h-2 bg-red-600 rounded-full"></span>
+          ISO-compliant production workflows
+        </li>
+        <li class="flex gap-4 items-start">
+          <span class="mt-1 w-2 h-2 bg-red-600 rounded-full"></span>
+          Dedicated R&D and quality assurance teams
+        </li>
+        <li class="flex gap-4 items-start">
+          <span class="mt-1 w-2 h-2 bg-red-600 rounded-full"></span>
+          Scalable capacity for large-volume orders
+        </li>
+      </ul>
+
+    </div>
+
+  </div>
+</section>
+
+  <!-- ================= VISION / MISSION / VALUES ================= -->
+
+<section class="relative bg-gray-50 py-10 lg:py-32 px-6 overflow-hidden">
+
+  <!-- Soft background accent -->
+  <div class="absolute -top-32 left-1/2 -translate-x-1/2
+              w-200 h-200 bg-red-100/40
+              rounded-full blur-[160px] -z-10"></div>
+
+  <div class="max-w-7xl mx-auto">
+
+    <!-- Section Header -->
+    <div class="max-w-3xl mb-20">
+      <span class="text-xs tracking-[0.3em] uppercase text-red-600 font-medium">
+        Our Foundation
+      </span>
+
+      <h2 class="mt-4 text-3xl sm:text-4xl lg:text-5xl font-semibold text-gray-900">
+        Vision, Mission &<br />
+        <span class="text-red-600">Core Values</span>
+      </h2>
+
+      <p class="mt-6 text-lg text-gray-600 leading-relaxed">
+        These principles define how we design, manufacture, and
+        deliver technology that customers trust.
+      </p>
+    </div>
+
+    <!-- Content Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+
+      <!-- ================= VISION ================= -->
+      <div class="lg:col-span-4">
+        <div
+          class="h-full bg-white rounded-3xl border border-gray-200
+                 p-8 hover:shadow-xl transition"
+        >
+          <!-- Image -->
+          <div class="rounded-2xl overflow-hidden mb-6">
+            <img
+              src="/icons/our_vision.jpg"
+              alt="Our Vision"
+              class="w-full h-44 object-cover"
+            />
+          </div>
+
+          <h3 class="text-xl font-semibold text-gray-900">
+            Our Vision
+          </h3>
+
+          <div class="w-10 h-1 bg-yellow-400 mt-4 mb-5 rounded-full"></div>
+
+          <p class="text-gray-600 leading-relaxed">
+            To become a globally trusted manufacturing partner,
+            delivering future-ready electrical and electronic
+            solutions with uncompromised reliability.
+          </p>
+        </div>
+      </div>
+
+      <!-- ================= MISSION (FEATURED) ================= -->
+      <div class="lg:col-span-4 lg:-mt-10">
+        <div
+          class="h-full bg-white rounded-[2.5rem]
+                 border border-gray-200
+                 p-10 hover:shadow-2xl transition relative"
+        >
+
+          <!-- Image -->
+          <div class="rounded-2xl overflow-hidden mb-6">
+            <img
+              src="/icons/our_mission.jpg"
+              alt="Our Mission"
+              class="w-full h-48 object-cover"
+            />
+          </div>
+
+          <h3 class="text-2xl font-semibold text-gray-900">
+            Our Mission
+          </h3>
+
+          <div class="w-12 h-1 bg-red-500 mt-4 mb-5 rounded-full"></div>
+
+          <p class="text-gray-600 leading-relaxed">
+            To engineer high-quality products through continuous
+            innovation, efficient manufacturing, and strict quality
+            control — ensuring safety, performance, and scalability
+            for every customer.
+          </p>
+        </div>
+      </div>
+
+      <!-- ================= VALUES ================= -->
+      <div class="lg:col-span-4">
+        <div
+          class="h-full bg-white rounded-3xl border border-gray-200
+                 p-8 hover:shadow-xl transition"
+        >
+          <!-- Image -->
+          <div class="rounded-2xl overflow-hidden mb-6">
+            <img
+              src="/icons/our_values.jpg"
+              alt="Our Values"
+              class="w-full h-44 object-cover"
+            />
+          </div>
+
+          <h3 class="text-xl font-semibold text-gray-900">
+            Our Values
+          </h3>
+
+          <div class="w-10 h-1 bg-yellow-400 mt-4 mb-5 rounded-full"></div>
+
+          <ul class="space-y-3 text-gray-600">
+            <li class="flex gap-3">
+              <span class="text-red-600 font-bold">—</span>
+              Integrity & transparency
+            </li>
+            <li class="flex gap-3">
+              <span class="text-red-600 font-bold">—</span>
+              Customer-first thinking
+            </li>
+            <li class="flex gap-3">
+              <span class="text-red-600 font-bold">—</span>
+              Continuous improvement
+            </li>
+            <li class="flex gap-3">
+              <span class="text-red-600 font-bold">—</span>
+              Engineering excellence
+            </li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ================= PRODUCTION PROCESS (ENHANCED) ================= -->
+<section class="relative bg-gray-50 py-10 lg:py-32 px-6 overflow-hidden">
+
+  <!-- Decorative background -->
+  <div class="absolute top-0 right-0 w-160 h-160 bg-red-100/40 rounded-full blur-[140px] -z-10"></div>
+
+  <div class="max-w-7xl mx-auto">
+
+    <!-- Section Header -->
+    <div class="max-w-3xl mb-20">
+      <span class="text-xs tracking-[0.3em] uppercase text-red-600 font-medium">
+        Production Process
+      </span>
+
+      <h2 class="mt-4 text-3xl sm:text-4xl lg:text-5xl font-semibold text-gray-900 leading-tight">
+        Built with Precision.<br />
+        <span class="text-red-600">Verified by Process.</span>
+      </h2>
+
+      <p class="mt-6 text-gray-600 text-lg leading-relaxed">
+        Our manufacturing ecosystem is designed to control quality at
+        every stage — from raw material intake to final product
+        dispatch.
+      </p>
+    </div>
+
+    <!-- ================= DESIGN + IMAGE BLOCK ================= -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center mb-28">
+
+      <!-- Left: Content -->
+      <div class="lg:col-span-5">
+        <h3 class="text-2xl lg:text-3xl font-semibold text-gray-900">
+          Product Design & Engineering
+        </h3>
+
+        <p class="mt-6 text-gray-600 leading-relaxed">
+          Bullette products are designed by experienced engineers
+          using industry-grade tools, validated components, and
+          real-world performance considerations.
+        </p>
+
+        <p class="mt-4 text-gray-600 leading-relaxed">
+          Each design is optimized for durability, safety, and
+          compliance while allowing flexibility for customer-specific
+          requirements.
+        </p>
+
+        <ul class="mt-8 space-y-3 text-gray-700">
+          <li class="flex gap-3">
+            <span class="text-red-600 font-bold">—</span>
+            In-house design & prototyping
+          </li>
+          <li class="flex gap-3">
+            <span class="text-red-600 font-bold">—</span>
+            Compliance-driven material selection
+          </li>
+          <li class="flex gap-3">
+            <span class="text-red-600 font-bold">—</span>
+            Continuous product optimization
+          </li>
+        </ul>
+      </div>
+
+      <!-- Right: Image -->
+      <div class="lg:col-span-7">
+        <div class="relative rounded-3xl overflow-hidden shadow-xl">
+          <img
+            src="/images/Factory.png"
+            alt="Product Design Process"
+            class="w-full h-105 object-cover"
+          />
+          <div class="absolute inset-0 bg-linear-to-tr from-black/20 to-transparent"></div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ================= QUALITY CONTROL ================= -->
+    <div class="relative bg-white rounded-[2.5rem] border border-gray-200 p-10 lg:p-16">
+
+      <!-- QC Header -->
+      <div class="max-w-3xl mb-14">
+        <h3 class="text-2xl lg:text-3xl font-semibold text-gray-900">
+          Multi-Level Quality Control
+        </h3>
+        <p class="mt-4 text-gray-600 leading-relaxed">
+          Our quality assurance system integrates inspection,
+          measurement, and verification across all production phases.
+        </p>
+      </div>
+
+      <!-- QC Cards -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+
+        <!-- QC Card -->
+        <div class="group">
+          <div class="rounded-2xl overflow-hidden mb-6">
+            <img
+              src="/images/Feed_Control.png"
+              alt="Feed Control"
+              class="w-full h-48 object-cover group-hover:scale-105 transition"
+            />
+          </div>
+          <h4 class="text-lg font-semibold text-gray-900">
+            Feed Control
+          </h4>
+          <p class="mt-3 text-gray-600 leading-relaxed">
+            Raw materials undergo sampling inspection, compliance
+            verification, and performance testing before entering
+            production.
+          </p>
+        </div>
+
+        <!-- QC Card -->
+        <div class="group">
+          <div class="rounded-2xl overflow-hidden mb-6">
+            <img
+              src="/images/Production_Quality_Control.png"
+              alt="Production Quality Control"
+              class="w-full h-48 object-cover group-hover:scale-105 transition"
+            />
+          </div>
+          <h4 class="text-lg font-semibold text-gray-900">
+            Production Quality Control
+          </h4>
+          <p class="mt-3 text-gray-600 leading-relaxed">
+            In-process checks include dimensional accuracy,
+            electrical performance, mechanical reliability, and
+            insulation testing.
+          </p>
+        </div>
+
+        <!-- QC Card -->
+        <div class="group">
+          <div class="rounded-2xl overflow-hidden mb-6">
+            <img
+              src="/images/Findished_Inspection.png"
+              alt="Finished Product Inspection"
+              class="w-full h-48 object-cover group-hover:scale-105 transition"
+            />
+          </div>
+          <h4 class="text-lg font-semibold text-gray-900">
+            Finished Product Inspection
+          </h4>
+          <p class="mt-3 text-gray-600 leading-relaxed">
+            Final inspection includes functionality validation,
+            appearance checks, labeling accuracy, and packaging
+            verification.
+          </p>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+
+  <!-- ================= CERTIFICATIONS ================= -->
+  <section class="bg-white pt-10 lg:py-28 px-6">
+    <div class="max-w-5xl mx-auto">
+
+      <div class="text-center mb-16">
+        <h2 class="text-3xl lg:text-4xl font-semibold text-gray-900">
+          Certified for <span class="text-red-600">Quality & Compliance</span>
+        </h2>
+        <p class="mt-6 max-w-2xl mx-auto text-gray-600">
+          Bullette adheres to internationally recognized standards,
+          ensuring safety, reliability, and consistent performance.
+        </p>
+      </div>
+
+      <div
+        class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4
+               gap-6 md:gap-8 justify-items-center"
+      >
+
+        {[1,2,3,4].map((i) => (
+          <div
+            class="bg-white border border-gray-200
+                  hover:shadow-lg transition
+                   flex items-center justify-center"
+          >
+            <img
+              src={`/images/Certificates/${i}.jpg`}
+              alt={`Certificate ${i}`}
+              class="max-h-72 object-contain cursor-pointer
+                     hover:scale-[1.03] transition"
+              onclick="openCertificateModal(this.src)"
+            />
+          </div>
+        ))}
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CERTIFICATE MODAL ================= -->
+  <div
+    id="certificateModal"
+    class="fixed inset-0 z-50 hidden items-center justify-center
+           bg-black/70 backdrop-blur-sm px-4"
+  >
+    <div class="relative w-fit bg-white rounded-lg">
+      <button
+        id="closeCertificateModal"
+        class="absolute top-3 right-4 text-3xl bg-red-600 rounded-full
+               w-10 h-10 flex items-center justify-center
+               text-white hover:text-red-600"
+      >
+        &times;
+      </button>
+
+      <img
+        id="certificateModalImage"
+        src=""
+        alt="Certificate Enlarged"
+        class="w-full max-h-[80vh] object-contain rounded-xl"
+      />
+    </div>
+  </div>
+<Footer/>
+</Layout>
+
+<script>
+  const modal = document.getElementById('certificateModal')
+  const modalImg = document.getElementById('certificateModalImage')
+  const closeBtn = document.getElementById('closeCertificateModal')
+
+  window.openCertificateModal = (src) => {
+    modalImg.src = src
+    modal.classList.remove('hidden')
+    modal.classList.add('flex')
+    document.body.style.overflow = 'hidden'
+  }
+
+  const closeModal = () => {
+    modal.classList.add('hidden')
+    modal.classList.remove('flex')
+    modalImg.src = ''
+    document.body.style.overflow = ''
+  }
+
+  closeBtn.addEventListener('click', closeModal)
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) closeModal()
+  })
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeModal()
+  })
+</script>

@@ -1,0 +1,137 @@
+---
+const {
+  overview = "",
+  technical = [],
+  applications = [],
+  standards = [],
+} = Astro.props;
+---
+
+<section class="w-full container mx-auto px-4 sm:px-6">
+
+  <!-- Sticky Nav -->
+  <div
+    class="top-20 z-20 bg-white
+           border-b"
+  >
+    <nav class="flex gap-6 overflow-x-auto text-sm font-medium">
+      <button data-tab="overview" class="tab active">Overview</button>
+      <button data-tab="technical" class="tab">Technical Details</button>
+      <button data-tab="applications" class="tab">Applications</button>
+      <button data-tab="standards" class="tab">Standards & Safety</button>
+    </nav>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="mt-10 space-y-16">
+
+    <!-- Overview -->
+    <section id="overview" class="tab-panel">
+      <h3 class="section-title">Product Overview</h3>
+      <p class="section-text">
+        {overview}
+      </p>
+    </section>
+
+    <!-- Technical -->
+    <section id="technical" class="tab-panel hidden">
+      <h3 class="section-title">Technical Details</h3>
+      <ul class="spec-grid">
+        {technical.map(item => (
+          <li>
+            <span class="label">{item.label}</span>
+            <span class="value">{item.value}</span>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <!-- Applications -->
+    <section id="applications" class="tab-panel hidden">
+      <h3 class="section-title">Applications</h3>
+      <ul class="bullet-list">
+        {applications.map(app => (
+          <li>{app}</li>
+        ))}
+      </ul>
+    </section>
+
+    <!-- Standards -->
+    <section id="standards" class="tab-panel hidden">
+      <h3 class="section-title">Standards & Safety</h3>
+      <ul class="bullet-list">
+        {standards.map(std => (
+          <li>{std}</li>
+        ))}
+      </ul>
+    </section>
+
+  </div>
+</section>
+
+<style>
+  .tab {
+    padding: 1rem 0;
+    border-bottom: 2px solid transparent;
+    white-space: nowrap;
+    color: #6b7280;
+  }
+  .tab.active {
+    color: #000;
+    border-color: #ef1923;
+  }
+  .section-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #000;
+    margin-bottom: 1rem;
+  }
+  .section-text {
+    max-width: 65ch;
+    color: #4b5563;
+    line-height: 1.7;
+  }
+  .spec-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+  }
+  .spec-grid li {
+    border: 1px solid #e5e7eb;
+    border-radius: 1rem;
+    padding: 1rem;
+  }
+  .label {
+    display: block;
+    font-size: 0.75rem;
+    color: #6b7280;
+  }
+  .value {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #000;
+    margin-top: 0.25rem;
+  }
+  .bullet-list {
+    list-style: disc;
+    padding-left: 1.25rem;
+    color: #4b5563;
+    line-height: 1.7;
+  }
+</style>
+
+<script is:inline>
+  const tabs = document.querySelectorAll(".tab")
+  const panels = document.querySelectorAll(".tab-panel")
+
+  tabs.forEach(tab => {
+    tab.addEventListener("click", () => {
+      tabs.forEach(t => t.classList.remove("active"))
+      panels.forEach(p => p.classList.add("hidden"))
+
+      tab.classList.add("active")
+      document.getElementById(tab.dataset.tab)
+        .classList.remove("hidden")
+    })
+  })
+</script>

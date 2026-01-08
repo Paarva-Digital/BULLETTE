@@ -1,0 +1,358 @@
+---
+const { slides = [] } = Astro.props;
+
+const styleMap = {
+  light: {
+    eyebrow: 'text-red-600',
+    heading: 'text-black',
+    description: 'text-gray-700',
+    highlight: 'text-red-600',
+    ctaWeight: 'font-medium',
+    ctaShadow: 'shadow-red-600/20 hover:shadow-red-600/40'
+  },
+  dark: {
+    eyebrow: 'text-white',
+    heading: 'text-white',
+    description: 'text-gray-200',
+    highlight: 'text-white',
+    ctaWeight: 'font-semibold',
+    ctaShadow: 'shadow-red-600/30 hover:shadow-red-600/50'
+  }
+};
+---
+
+<swiper-container
+  class="heroSwiper-main w-full h-125 sm:h-125 lg:h-150 xl:h-180 relative"
+  loop="true"
+  autoplay-delay="4500"
+  autoplay-disable-on-interaction="false"
+  speed="900"
+  effect="fade"
+>  <!-- Slide 1 -->
+{slides.map((slide) => {
+  const variant = slide.variant === 'dark' ? 'dark' : 'light';
+  const styles = styleMap[variant];
+
+  return (
+    <swiper-slide
+      class="flex items-center justify-center sm:justify-start text-white bg-cover bg-center relative"
+      style={`background-image: url(${slide.backgroundImage?.asset?.url})`}
+    >
+      <div class="container mx-auto px-4 sm:px-6 md:px-12">
+        <div class="max-w-2xl space-y-4 sm:space-y-6">
+
+          <span
+            class={`inline-block text-[11px] sm:text-xs tracking-[0.25em] uppercase font-semibold ${styles.eyebrow}`}
+          >
+            {slide.eyebrow}
+          </span>
+
+          <h1
+            class={`text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight ${styles.heading}`}
+          >
+            {slide.heading}{' '}
+            {slide.highlight && (
+              <span class={styles.highlight}>{slide.highlight}</span>
+            )}
+          </h1>
+
+          <p
+            class={`text-base sm:text-lg leading-relaxed max-w-lg ${styles.description}`}
+          >
+            {slide.description}
+          </p>
+
+          <div class="pt-3">
+            <a
+              href={slide.ctaLink}
+              class={`inline-flex items-center justify-center
+                h-11 sm:h-12 px-6 sm:px-8
+                rounded-full
+                bg-red-600 text-white
+                text-sm sm:text-base
+                ${styles.ctaWeight}
+                hover:bg-red-700
+                transition-all duration-300
+                shadow-lg
+                ${styles.ctaShadow}`}
+            >
+              {slide.ctaLabel}
+            </a>
+          </div>
+
+        </div>
+      </div>
+    </swiper-slide>
+  );
+})}
+
+
+
+
+<!-- Progress Bars -->
+<div class="absolute z-50 bottom-6 sm:bottom-8 md:bottom-10 left-0 w-full">
+  <div class="container mx-auto px-4 sm:px-6 md:px-12">
+
+    <div class="flex items-center gap-2 sm:gap-3">
+
+      <!-- BAR -->
+      <div class="relative w-16 sm:w-20 md:w-24 lg:w-40">
+        <div class="absolute inset-0 h-1.5 bg-white/20 rounded-full"></div>
+        <div
+          class="heroSwiper-progress h-1.5 bg-white rounded-full scale-x-0"
+          style="transform-origin:left; will-change:transform;"
+        ></div>
+      </div>
+
+      <!-- BAR -->
+      <div class="relative w-16 sm:w-20 md:w-24 lg:w-40">
+        <div class="absolute inset-0 h-1.5 bg-white/20 rounded-full"></div>
+        <div
+          class="heroSwiper-progress h-1.5 bg-white rounded-full scale-x-0"
+          style="transform-origin:left; will-change:transform;"
+        ></div>
+      </div>
+
+      <!-- BAR -->
+      <div class="relative w-16 sm:w-20 md:w-24 lg:w-40">
+        <div class="absolute inset-0 h-1.5 bg-white/20 rounded-full"></div>
+        <div
+          class="heroSwiper-progress h-1.5 bg-white rounded-full scale-x-0"
+          style="transform-origin:left; will-change:transform;"
+        ></div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Custom Controls -->
+<div class="absolute bottom-4 sm:bottom-6 md:bottom-10 left-0 w-full z-50">
+  <div class="container mx-auto px-4 sm:px-6 md:px-12 flex items-center justify-end">
+
+    <!-- Controls -->
+    <div
+      class="flex items-center gap-1 sm:gap-2
+             rounded-full
+             bg-white/10 backdrop-blur-md
+             border border-white/20
+             px-2 sm:px-3 py-1
+             shadow-lg shadow-black/30"
+    >
+
+      <!-- Prev -->
+      <button
+        class="heroSwiper-prevBtn
+               w-9 h-9 sm:w-10 sm:h-10
+               flex items-center justify-center
+               rounded-full
+               text-white text-base sm:text-lg
+               hover:bg-white/20
+               transition-all duration-300"
+        aria-label="Previous slide"
+      >
+        ❮
+      </button>
+
+      <!-- Autoplay -->
+      <button
+        class="heroSwiper-autoplayControl
+               w-9 h-9 sm:w-10 sm:h-10
+               flex items-center justify-center
+               rounded-full
+               bg-white/20
+               hover:bg-white/30
+               transition-all duration-300"
+        aria-label="Pause autoplay"
+      >
+        <svg
+          width="14"
+          height="14"
+          viewBox="0 0 16 16"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+            d="M4 2C3.44772 2 3 2.44772 3 3V13C3 13.5523 3.44772 14 4 14H6C6.55228 14 7 13.5523 7 13V3C7 2.44772 6.55228 2 6 2H4ZM10 2C9.44772 2 9 2.44772 9 3V13C9 13.5523 9.44772 14 10 14H12C12.5523 14 13 13.5523 13 13V3C13 2.44772 12.5523 2 12 2H10Z"
+            fill="white"
+          />
+        </svg>
+      </button>
+
+      <!-- Next -->
+      <button
+        class="heroSwiper-nextBtn
+               w-9 h-9 sm:w-10 sm:h-10
+               flex items-center justify-center
+               rounded-full
+               text-white text-base sm:text-lg
+               hover:bg-white/20
+               transition-all duration-300"
+        aria-label="Next slide"
+      >
+        ❯
+      </button>
+
+    </div>
+
+  </div>
+</div>
+
+</swiper-container>
+
+
+<style>
+  /* Prevent swiper stacking flash */
+swiper-container:not(.swiper-initialized) {
+  visibility: hidden;
+}
+
+swiper-container.swiper-initialized {
+  visibility: visible;
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const swiperEl = document.querySelector('.heroSwiper-main');
+  if (!swiperEl) return;
+
+  // When Swiper initializes
+  swiperEl.addEventListener('swiperinit', () => {
+    swiperEl.classList.add('swiper-initialized');
+  });
+
+  // Fallback (in case event fires early)
+  if (swiperEl.swiper) {
+    swiperEl.classList.add('swiper-initialized');
+  }
+});
+</script>
+
+
+<script>
+import {gsap} from 'gsap';
+
+document.addEventListener('DOMContentLoaded', () => {
+  const swiperEl = document.querySelector('.heroSwiper-main') as any;
+  const progressBars = document.querySelectorAll(".heroSwiper-progress");
+  let activeTween: any = null;
+
+  console.log('DOM loaded - found bars:', progressBars.length);
+
+  // 🔥 FUNCTION — Animate progress for a slide
+  function animateProgress(index: number, duration: number) {
+    console.log('Animating bar:', index, 'Duration:', duration);
+    
+    // Reset all progress bars to scaleX 0 (backgrounds stay visible)
+    progressBars.forEach((bar: any) => {
+      gsap.set(bar, { 
+        scaleX: 0, 
+        transformOrigin: "left"
+      });
+    });
+
+    // Kill previous tween
+    if (activeTween) activeTween.kill();
+
+    // Animate current bar from 0 to 1
+    activeTween = gsap.to(progressBars[index], {
+      scaleX: 1,
+      ease: "none",
+      duration: duration / 1000,
+      onComplete: () => {
+        console.log('Animation complete');
+      }
+    });
+  }
+
+  // Function to setup swiper listeners
+  function setupSwiperListeners(swiper: any) {
+    console.log('Setting up swiper listeners, autoplay delay:', swiper.params.autoplay.delay);
+    animateProgress(swiper.realIndex, swiper.params.autoplay.delay);
+
+    // On slide change animate new bar
+    swiper.on('slideChange', () => {
+      console.log('Slide changed to:', swiper.realIndex);
+      animateProgress(swiper.realIndex, swiper.params.autoplay.delay);
+    });
+
+    // Pause GSAP when autoplay stops
+    swiper.on('autoplayStop', () => {
+      console.log('Autoplay stopped');
+      if (activeTween) activeTween.pause();
+    });
+
+    // Resume GSAP when autoplay restarts
+    swiper.on('autoplayStart', () => {
+      console.log('Autoplay started');
+      if (activeTween) activeTween.resume();
+    });
+  }
+
+  // Try to get swiper immediately (in case it's already initialized)
+  if (swiperEl?.swiper) {
+    console.log('Swiper already initialized');
+    setupSwiperListeners(swiperEl.swiper);
+  } else {
+    // Wait for swiper to initialize
+    swiperEl?.addEventListener('swiperinit', () => {
+      console.log('Swiper init event fired');
+      setupSwiperListeners(swiperEl.swiper);
+    }, { once: true });
+
+    // Fallback: check after 1 second if swiper exists
+    setTimeout(() => {
+      if (swiperEl?.swiper && !activeTween) {
+        console.log('Swiper found via timeout');
+        setupSwiperListeners(swiperEl.swiper);
+      }
+    }, 1000);
+  }
+});
+</script>
+
+<!-- Swiper Control Script -->
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const swiperEl = document.querySelector('.heroSwiper-main') as any;
+  const nextBtn = document.querySelector('.heroSwiper-nextBtn');
+  const prevBtn = document.querySelector('.heroSwiper-prevBtn');
+  const controlBtn = document.querySelector('.heroSwiper-autoplayControl');
+
+  // ✅ Navigation buttons
+  nextBtn?.addEventListener('click', () => swiperEl.swiper.slideNext());
+  prevBtn?.addEventListener('click', () => swiperEl.swiper.slidePrev());
+
+  // ✅ Play/Pause control
+  controlBtn?.addEventListener('click', () => {
+    if (swiperEl.swiper.autoplay.running) {
+      // Stop autoplay
+      swiperEl.swiper.autoplay.stop();
+      controlBtn.innerHTML = `
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
+          xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd" clip-rule="evenodd"
+            d="M11.5708 8.85749C12.2182 8.46909 12.2182 7.53091 11.5708 7.14251L4.5145 2.9087C3.84797 2.50878 3 2.9889 3 3.76619V12.2338C3 13.0111 3.84797 13.4912 4.5145 13.0913L11.5708 8.85749Z"
+            fill="black"/>
+        </svg>
+      `;
+    } else {
+      // Start autoplay
+      swiperEl.swiper.autoplay.start();
+      controlBtn.innerHTML = `
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
+          xmlns="http://www.w3.org/2000/svg">
+          <rect x="3" y="2" width="3" height="12" fill="black"/>
+          <rect x="10" y="2" width="3" height="12" fill="black"/>
+        </svg>
+      `;
+    }
+  });
+});
+
+</script>

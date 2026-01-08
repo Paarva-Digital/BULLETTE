@@ -1,11 +1,111 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
+import Layout from "@/layouts/Layout.astro";
+import Navbar from "@/components/Global/Navbar.astro";
+import HeroSwiper from "@/components/Home/HeroSwiper.astro";
+import ProductList from "@/components/Home/ProductList.astro";
+import FtdProducts from "@/components/Home/FtdProducts.astro";
+import WhyChooseUs from "@/components/Home/WhyChooseUs.astro";
+import NeedHelp from "@/components/Home/NeedHelp.astro";
+import SocialFeed from "@/components/Home/SocialFeed.astro";
+import BlogLinks from "@/components/Home/BlogLinks.astro";
+import Subnav from "@/components/Home/Subnav.astro";
+import NewAbtSec from "@/components/Home/NewAbtSec.astro";
+import Cta from "@/components/Home/Cta.astro";
+import Footer from "@/components/Global/Footer.astro";
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import { sanity } from "@/sanity/lib/sanity";
+
+const home = await sanity.fetch(`
+  *[_type == "homePage"][0]{
+    heroSlides[]{
+      variant,
+      eyebrow,
+      heading,
+      highlight,
+      description,
+      ctaLabel,
+      ctaLink,
+      backgroundImage{
+        asset->{url}
+      }
+    },
+
+    productCategories[]{
+      name,
+      slug,
+      image{
+        asset->{url}
+      }
+    },
+
+    ftdProducts{
+      heading,
+      products[]{
+        title,
+        subtitle,
+        features,
+        image{
+          asset->{url}
+        },
+        product->{
+          category,
+          "slug": slug.current
+        }
+      }
+    },
+
+    socialFeed{
+      heading,
+      subheading,
+      items[]{
+        type,
+        title,
+        description,
+        dateLabel,
+        image{
+          asset->{url}
+        },
+        video{
+          asset->{url}
+        }
+      }
+    },
+
+    blogSection{
+      heading,
+      subheading,
+      posts[]->{
+        title,
+        slug,
+        excerpt,
+        author,
+        publishedAt,
+        coverImage{
+          asset->{url}
+        }
+      }
+    }
+  }
+`);
+
+if (!home) {
+  throw new Error("Homepage content not found");
+}
 ---
 
+
+
 <Layout>
-	<Welcome />
+  <Navbar />
+  <HeroSwiper slides={home.heroSlides ?? []} />
+  <Subnav />
+  <ProductList categories={home.productCategories ?? []} />
+  <NewAbtSec />
+  <FtdProducts section={home.ftdProducts} />
+  <WhyChooseUs />
+  <NeedHelp />
+  <BlogLinks section={home.blogSection} />
+  <SocialFeed section={home.socialFeed} />
+  <Cta />
+  <Footer />
 </Layout>

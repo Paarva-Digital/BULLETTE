@@ -1,3 +1,7 @@
+---
+ import '../styles/global.css'
+---
+
 <!doctype html>
 <html lang="en">
 	<head>
@@ -5,18 +9,104 @@
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
+		<title>Bullette</title>
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Albert+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 	</head>
-	<body>
+	<body class="font-albert">
 		<slot />
+		<div
+  id="theme-overlay"
+  class="
+    fixed inset-0
+    pointer-events-none
+    bg-black
+    z-9999
+    hidden
+  "
+></div>
 	</body>
-</html>
+	<script>
+		import Lenis from 'lenis'
+import { register } from 'swiper/element/bundle';
+// register Swiper custom elements
+register();
 
-<style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-	}
-</style>
+ // ✅ Updated Lenis Smooth Scrolling
+  const lenis = new Lenis({
+    duration: 1.2,
+    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+  });
+
+  function raf(time) {
+    lenis.raf(time);
+    requestAnimationFrame(raf);
+  }
+  requestAnimationFrame(raf);
+
+
+  if (typeof window !== "undefined") {
+  window.lenis = lenis
+}
+	</script>
+	<script>
+  const toggle = document.getElementById("theme-toggle");
+  const overlay = document.getElementById("theme-overlay");
+  const root = document.documentElement;
+
+  function handleThemeToggle(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    
+    // Disable scroll to prevent jumping
+    document.body.style.overflow = "hidden";
+    
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      root.classList.toggle("dark");
+      window.location.href = "/UltraDark";
+      return;
+    }
+
+    const x = e.clientX || window.innerWidth / 2;
+    const y = e.clientY || window.innerHeight / 2;
+
+    const radius = Math.hypot(
+      Math.max(x, innerWidth - x),
+      Math.max(y, innerHeight - y)
+    );
+
+    overlay.style.display = "block";
+    overlay.style.opacity = "0";
+    overlay.style.clipPath = `circle(0px at ${x}px ${y}px)`;
+
+    const animation = overlay.animate(
+      {
+        clipPath: [
+          `circle(0px at ${x}px ${y}px)`,
+          `circle(${radius}px at ${x}px ${y}px)`
+        ],
+        opacity: ["0", "1"]
+      },
+      {
+        duration: 600,
+        easing: "ease-in-out"
+      }
+    );
+
+    animation.onfinish = () => {
+      root.classList.toggle("dark");
+      // Keep overlay opaque during page transition
+      overlay.style.opacity = "1";
+      overlay.style.clipPath = `circle(${radius}px at ${x}px ${y}px)`;
+      // Wait for page load + buffer time before navigating
+      setTimeout(() => {
+        window.location.href = "/UltraDark";
+      }, 300);
+    };
+  }
+
+  toggle?.addEventListener("click", handleThemeToggle);
+</script>
+
+</html>

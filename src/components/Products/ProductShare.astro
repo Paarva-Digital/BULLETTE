@@ -1,0 +1,122 @@
+---
+const {
+  productName = "",
+  productUrl = Astro.url?.toString() || "",
+} = Astro.props;
+
+const encodedUrl = encodeURIComponent(productUrl);
+const encodedTitle = encodeURIComponent(productName);
+---
+
+<section class="mt-6">
+  <div
+    class="
+      w-fit
+      flex items-center justify-center sm:justify-start
+      gap-5 sm:gap-6
+      rounded-xl
+      border border-gray-200
+      bg-white
+      px-6 py-4
+    "
+  >
+    <!-- WhatsApp -->
+    <a
+      href={`https://wa.me/?text=${encodedTitle}%20${encodedUrl}`}
+      target="_blank"
+      rel="noopener"
+      aria-label="Share on WhatsApp"
+      class="share-item"
+    >
+      <img src="/icons/social/wtsp.png" alt="" />
+    </a>
+
+    <!-- Facebook -->
+    <a
+      href={`https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`}
+      target="_blank"
+      rel="noopener"
+      aria-label="Share on Facebook"
+      class="share-item"
+    >
+      <img src="/icons/social/fb.png" alt="" />
+    </a>
+
+    <!-- X -->
+    <a
+      href={`https://twitter.com/intent/tweet?text=${encodedTitle}&url=${encodedUrl}`}
+      target="_blank"
+      rel="noopener"
+      aria-label="Share on X"
+      class="share-item"
+    >
+      <img src="/icons/social/x.png" alt="" />
+    </a>
+
+    <!-- Divider -->
+    <span class="w-px h-6 bg-gray-200"></span>
+
+    <!-- Copy -->
+    <button
+      id="copyLink"
+      type="button"
+      class="share-copy"
+    >
+      <img src="/icons/social/link.png" alt="" />
+      <span class="copy-feedback">Copy</span>
+    </button>
+  </div>
+</section>
+<style>
+  .share-item,
+.share-copy {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+
+.share-item img {
+  width: 35px;
+  height: 35px;
+  transition: opacity 0.2s ease;
+}
+
+.share-item:hover img {
+  opacity: 1;
+}
+
+.share-copy img {
+  width: 35px;
+  height: 35px;
+}
+
+.copy-feedback {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #000000; /* red-600 */
+}
+
+</style>
+
+<script is:inline define:vars={{ productUrl }}>
+  const copyBtn = document.getElementById("copyLink");
+
+  copyBtn?.addEventListener("click", async () => {
+    const span = copyBtn.querySelector(".copy-feedback");
+    if (!span) return;
+
+    const original = span.textContent;
+
+    try {
+      await navigator.clipboard.writeText(productUrl);
+      span.textContent = "copied ✓";
+      setTimeout(() => (span.textContent = original), 2000);
+    } catch {
+      span.textContent = "✕";
+      setTimeout(() => (span.textContent = original), 2000);
+    }
+  });
+</script>
+
+

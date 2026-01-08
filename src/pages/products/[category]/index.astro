@@ -1,0 +1,62 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+import Navbar from "../../../components/Global/Navbar.astro";
+import CategoryTabs from "../../../components/Products/CategoryTabs.astro";
+import FilterBar from "../../../components/Products/FilterBar.astro";
+import ProductCard from "../../../components/Products/ProductCard.astro";
+import Footer from "@/components/Global/Footer.astro";
+import { sanity } from "@/sanity/lib/sanity";
+
+export const prerender = false;
+
+const { category } = Astro.params;
+
+const categoryProducts = await sanity.fetch(
+  `*[_type == "product" && category == $category]{
+    name,
+    "slug": slug.current,
+    category,
+    tag,
+    shortDescription,
+    "image": image.asset->url
+  }`,
+  { category }
+);
+
+const tags = categoryProducts.length
+  ? [...new Set(categoryProducts.map((p) => p.tag).filter(Boolean))]
+  : [];
+---
+
+
+
+<Layout>
+  <Navbar />
+  <CategoryTabs />
+
+  {categoryProducts.length > 0 ? (
+    <>
+      <FilterBar tags={tags} />
+
+      <div
+        class="container px-5 mx-auto mt-8
+               grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-6"
+      >
+        {categoryProducts.map((product) => (
+          <ProductCard product={product} />
+        ))}
+      </div>
+    </>
+  ) : (
+    <!-- Empty state -->
+    <div class="container mx-auto mt-20 text-center">
+      <h2 class="text-xl font-semibold text-gray-800">
+        No products found
+      </h2>
+      <p class="mt-2 text-gray-500">
+        This category does not have any products yet.
+      </p>
+    </div>
+  )}
+<Footer/>
+</Layout>

@@ -1,0 +1,229 @@
+<header
+  id="header"
+  class="fixed top-0 left-0 w-full z-50 transition-all duration-300 font-quicksand invisible"
+>
+  <div
+    class="sm:container mx-auto flex items-center justify-between
+           px-4 sm:px-6 py-3 md:py-4
+           bg-zinc-950/90 backdrop-blur-xl
+           sm:rounded-3xl sm:mt-3
+           border border-white/10
+           shadow-[0_20px_60px_-20px_rgba(0,0,0,0.8)]"
+  >
+
+<!-- Logo + Ultra Mark -->
+<div class="relative flex items-start">
+
+  <!-- Bullette Logo -->
+  <img
+    src="/icons/BULLETTE-LOGO-WT.png"
+    alt="Bullette Logo"
+    class="w-36 lg:w-52 object-contain pointer-events-none"
+    loading="eager"
+  />
+
+  <!-- Ultra Mark (Prominent Superscript) -->
+  <a
+    class="absolute -right-44
+           flex items-center justify-center
+           h-8 px-4 rounded-2xl"
+    aria-label="Bullette Ultra Series"
+  >
+    <img
+      src="/icons/ULTRA-23.png"
+      alt="Ultra Series"
+      class="h-32 w-auto object-contain"
+    />
+  </a>
+
+</div>
+
+
+    <!-- Desktop Nav -->
+    <nav
+      class="hidden md:flex items-center gap-10
+             text-neutral-200 font-medium tracking-wide"
+    >
+      <a href="/" class="hover:text-red-500 transition">HOME</a>
+      <a href="/products/lighting" class="hover:text-red-500 transition">PRODUCTS</a>
+      <a href="/About" class="hover:text-red-500 transition">ABOUT US</a>
+    </nav>
+
+    <!-- CTA + Menu -->
+    <div class="flex items-center gap-2">
+
+      <!-- Download Brochure -->
+      <a
+        href="/brochure.pdf"
+        download
+        class="group hidden lg:flex items-center gap-3
+               text-black font-semibold
+               px-5 py-3 rounded-full
+               bg-linear-to-br from-red-500 to-yellow-400
+               hover:scale-[1.03] transition"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="currentColor"
+          class="w-6 h-6 group-hover:translate-y-0.5 transition"
+          viewBox="0 0 24 24"
+        >
+          <path d="M12 16l4-5h-3V4h-2v7H8l4 5zm8 2v2H4v-2h16z"/>
+        </svg>
+        <span class="uppercase tracking-wide">Download Brochure</span>
+      </a>
+
+      <!-- Mobile Menu -->
+      <button
+        id="menuIcon"
+        class="md:hidden rounded-xl p-2
+               hover:bg-white/10 transition"
+      >
+        <img src="/icons/hamburger.svg" class="w-8 h-8" />
+      </button>
+    </div>
+
+  </div>
+</header>
+
+
+<aside
+  id="sidebar"
+  class="fixed top-0 right-0 z-9999
+         w-3/5 max-w-sm h-screen
+         bg-zinc-950 border-l border-white/10
+         shadow-2xl
+         translate-x-full transition-transform duration-500"
+>
+
+  <!-- Close -->
+<button
+  id="closesidebar"
+  class="absolute top-5 right-5
+         w-10 h-10
+         flex items-center justify-center
+         rounded-full
+         bg-white/10
+         hover:bg-red-500/20
+         transition
+         overflow-hidden"
+>
+  <img
+    src="/icons/X.svg"
+    class="w-4.5 h-4.5"
+    alt="Close"
+  />
+</button>
+
+
+  <div class="flex flex-col justify-evenly h-full px-8 py-20">
+
+    <!-- Nav -->
+    <nav class="flex flex-col space-y-8 text-2xl font-medium text-neutral-200">
+      <a href="/" class="hover:text-red-500 transition">Home</a>
+      <a href="/products/lighting" class="hover:text-red-500 transition">Products</a>
+      <a href="/About" class="hover:text-red-500 transition">About</a>
+    </nav>
+
+    <!-- Socials -->
+    <div class="flex justify-center gap-5 mt-12">
+      <a href="" class="w-12 h-12 flex items-center justify-center
+                bg-white rounded-xl hover:bg-red-500 transition">
+        <img src="/icons/social/fb.png" class="w-6 h-6" />
+      </a>
+      <a href="" class="w-12 h-12 flex items-center justify-center
+                bg-white rounded-xl hover:bg-red-500 transition">
+        <img src="/icons/social/wtsp.png" class="w-6 h-6" />
+      </a>
+      <a href="" class="w-12 h-12 flex items-center justify-center
+                bg-white rounded-xl hover:bg-red-500 transition">
+        <img src="/icons/social/insta.png" class="w-6 h-6" />
+      </a>
+    </div>
+  </div>
+</aside>
+
+
+<script>
+import { gsap } from "gsap";
+
+const header = document.getElementById("header");
+const headerInner = header.querySelector(".sm\\:container");
+let lastScroll = 0;
+let isHidden = false;
+
+const isMobile = window.innerWidth < 640;
+
+// 🟢 Initial setup - hide header above viewport
+gsap.set(header, { 
+  y: -120, // Use fixed pixel value instead of percentage
+});
+
+// 🟢 Animate header slide-in on load
+window.addEventListener("load", () => {
+  const timeline = gsap.timeline({ delay: 0.2 }); // Small delay for better UX
+  
+  timeline
+    .to(header, { 
+      y: 0, // Slide to natural position
+      autoAlpha: 1, // Animates to opacity: 1 and visibility: visible
+      duration: 0.8,
+      ease: "power2.out" // Smooth, natural ease
+    })
+});
+
+// 🟢 Scroll hide/show
+window.addEventListener("scroll", () => {
+  const currentScroll = window.scrollY;
+
+  if (currentScroll < 100) {
+    gsap.to(header, { y: 0, autoAlpha: 1, duration: 0.8, ease: "power3.out" });
+    isHidden = false;
+    return;
+  }
+
+  if (currentScroll > lastScroll && !isHidden) {
+    gsap.to(header, { y: "-110%", autoAlpha: 0, duration: 0.8, ease: "power3.out" });
+    isHidden = true;
+  } else if (currentScroll < lastScroll && isHidden) {
+    gsap.to(header, { y: 0, autoAlpha: 1, duration: 0.8, ease: "power3.out" });
+    isHidden = false;
+  }
+
+  lastScroll = currentScroll;
+});
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const menuIcon = document.getElementById("menuIcon");
+    const sidebar = document.getElementById("sidebar");
+    const closesidebar = document.getElementById("closesidebar");
+    const body = document.body;
+
+    const openSidebar = () => {
+      sidebar.classList.remove("translate-x-full");
+      sidebar.classList.add("translate-x-0");
+      body.style.overflow = "hidden";
+    };
+
+    const closeSidebar = () => {
+      sidebar.classList.remove("translate-x-0");
+      sidebar.classList.add("translate-x-full");
+      body.style.overflow = "";
+    };
+
+    menuIcon?.addEventListener("click", openSidebar);
+    closesidebar?.addEventListener("click", closeSidebar);
+
+    document.addEventListener("click", (e) => {
+      if (!sidebar.contains(e.target) && !menuIcon.contains(e.target)) {
+        closeSidebar();
+      }
+    });
+  });
+
+</script>
+
+
+
+
+

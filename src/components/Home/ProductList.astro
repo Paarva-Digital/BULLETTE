@@ -1,0 +1,140 @@
+---
+const { categories = [] } = Astro.props;
+
+const items = categories.map(cat => ({
+  name: cat.name,
+  img: cat.image?.asset?.url || '/images/Products/Bulb.png',
+  link: `/products/${cat.slug}`,
+}));
+---
+
+
+
+
+
+<!-- Swiper Web Components MUST be registered -->
+<section class="bg-gray-100 py-16 sm:py-20">
+  <div class="container mx-auto px-6 relative">
+
+    <!-- Header + Navigation -->
+    <div class="flex justify-between items-center mb-6">
+      <h2
+        class="text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl
+               font-medium tracking-tight leading-snug sm:leading-tight">
+        Select a category to explore available products
+      </h2>
+
+      <div class="flex gap-2">
+        <!-- Prev -->
+        <button
+          class="productList-prevBtn
+                 w-11 h-11 sm:w-12 sm:h-12 lg:w-14 lg:h-14
+                 flex items-center justify-center
+                 rounded-full
+                 bg-white/80 backdrop-blur
+                 border border-gray-200
+                 shadow-sm
+                 transition-all duration-300
+                 hover:bg-white hover:shadow-lg
+                 hover:-translate-y-0.5
+                 active:translate-y-0"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg"
+               class="w-5 h-5 sm:w-6 sm:h-6 stroke-[2.5] text-gray-800"
+               fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M15 19l-7-7 7-7" />
+          </svg>
+        </button>
+
+        <!-- Next -->
+        <button
+          class="productList-nextBtn
+                 w-11 h-11 sm:w-12 sm:h-12 lg:w-14 lg:h-14
+                 flex items-center justify-center
+                 rounded-full
+                 bg-white/80 backdrop-blur
+                 border border-gray-200
+                 shadow-sm
+                 transition-all duration-300
+                 hover:bg-white hover:shadow-lg
+                 hover:-translate-y-0.5
+                 active:translate-y-0"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg"
+               class="w-5 h-5 sm:w-6 sm:h-6 stroke-[2.5] text-gray-800"
+               fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Swiper -->
+    <swiper-container
+      class="productList-swiper overflow-visible min-h-[260px]"
+      slides-per-view="4"
+      space-between="24"
+      loop="true"
+      navigation="true"
+      navigation-next-el=".productList-nextBtn"
+      navigation-prev-el=".productList-prevBtn"
+      breakpoints='{"0":{"slidesPerView":2,"spaceBetween":10},"640":{"slidesPerView":2,"spaceBetween":16},"1024":{"slidesPerView":3,"spaceBetween":24},"1280":{"slidesPerView":4,"spaceBetween":24}}'
+    >
+      {items.map(cat => (
+
+        <swiper-slide>
+          <a
+            href={cat.link}
+            class="group block overflow-hidden
+                   rounded-xl sm:rounded-2xl
+                   bg-white
+                   shadow-sm hover:shadow-md
+                   transition-all duration-300
+                   sm:hover:-translate-y-1"
+          >
+
+            <!-- Image Area -->
+            <div class="relative aspect-square bg-white overflow-hidden">
+              <div class="relative z-10 flex items-center justify-center h-full p-4 sm:p-6">
+                <img
+                  src={cat.img}
+                  alt={cat.name}
+                  loading="lazy"
+                  decoding="async"
+                  onerror="this.style.display='none'"
+                  class="w-[78%] sm:w-4/5 h-[78%] sm:h-4/5 object-contain
+                         transition-transform duration-300
+                         group-hover:scale-[1.04]"
+                />
+              </div>
+            </div>
+
+            <!-- Text Area -->
+            <div
+              class="bg-[#e01e26]
+                     px-3 sm:px-4
+                     min-h-14 sm:min-h-18 lg:min-h-24
+                     flex items-center justify-center
+                     text-center"
+            >
+              <h3
+                class="text-white font-medium
+                       text-sm sm:text-lg lg:text-2xl
+                       tracking-tight leading-tight"
+              >
+                {cat.name}
+              </h3>
+            </div>
+
+          </a>
+        </swiper-slide>
+      ))}
+    </swiper-container>
+
+    {categories.length === 0 && (
+      <p class="text-red-600 mt-4">No categories found</p>
+    )}
+  </div>
+</section>

@@ -1,0 +1,244 @@
+---
+const { section } = Astro.props;
+
+if (!section) return;
+
+const {
+  heading = "",
+  subheading = "",
+  items = [],
+} = section;
+---
+
+<!-- SOCIAL FEED SECTION -->
+<section class="w-full py-16 bg-gray-50">
+  <div class="container mx-auto px-6">
+
+    <!-- Heading -->
+    <h2 class="text-3xl sm:text-4xl font-medium text-gray-900">
+      {heading}
+    </h2>
+    <p class="text-lg text-gray-700 mt-1">
+      {subheading}
+    </p>
+
+    <!-- Swiper Carousel -->
+    <swiper-container
+      slides-per-view="1"
+      space-between="16"
+      breakpoints='{"640":{"slidesPerView":2,"spaceBetween":20},"1024":{"slidesPerView":4,"spaceBetween":24}}'
+      class="mt-10"
+      loop="true"
+      autoplay-delay="2000"
+      disable-on-interaction="false"
+      speed="800"
+      navigation="false"
+    >
+
+      {items.map((item) => (
+        <swiper-slide>
+          <div
+            class="social-card group bg-white rounded-3xl shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all cursor-pointer overflow-hidden"
+            data-type={item.type}
+            data-title={item.title}
+            data-date={item.dateLabel}
+            data-description={item.description}
+            data-image={item.image?.asset?.url}
+            data-video={item.video?.asset?.url}
+          >
+            <!-- Media -->
+            <div class="relative aspect-[4/5] bg-gray-100 overflow-hidden">
+              <img
+                src={
+                  item.image?.asset?.url ??
+                  "/images/placeholder.png"
+                }
+                class="w-full h-full object-cover group-hover:scale-105 transition"
+                alt={item.title}
+              />
+
+              {item.type === "reel" && (
+                <>
+                  <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                  <div class="absolute inset-0 flex items-center justify-center">
+                    <div class="bg-white/90 rounded-full px-5 py-3.5 text-lg">
+                      ▶
+                    </div>
+                  </div>
+                </>
+              )}
+            </div>
+
+            <!-- Content -->
+            <div class="p-4 space-y-3">
+              <p class="text-sm text-gray-800 line-clamp-3">
+                {item.description}
+              </p>
+
+              <div class="flex items-center justify-between">
+                <img
+                  src="/icons/64px-Instagram_logo_2022.svg.png"
+                  class="w-6 h-6"
+                  alt="Instagram"
+                />
+                <span class="text-xs text-gray-500">
+                  {item.dateLabel}
+                </span>
+              </div>
+            </div>
+          </div>
+        </swiper-slide>
+      ))}
+
+    </swiper-container>
+  </div>
+</section>
+
+
+
+<!-- MODAL -->
+<!-- MODAL -->
+<div id="socialModal"
+     class="fixed inset-0 bg-black/70 hidden z-50 flex items-center justify-center px-4 sm:px-6 lg:px-8">
+  <div
+    class="relative bg-white rounded-2xl w-full max-w-[1000px]
+           grid md:grid-cols-[360px_1fr] gap-6 lg:gap-8 p-5 lg:p-8
+           shadow-2xl max-h-[90vh] overflow-hidden">
+
+    <!-- Close -->
+    <button id="closeModal"
+            class="absolute top-4 right-4 w-10 h-10
+                   rounded-full bg-black/60 text-white text-base
+                   flex items-center justify-center
+                   hover:bg-black hover:scale-105 transition">
+      ✕
+    </button>
+
+    <!-- Media -->
+    <div class="flex justify-center items-center">
+      <div
+        class="aspect-[4/5] w-full max-w-[360px]
+               bg-black rounded-xl overflow-hidden flex items-center justify-center">
+        <video id="modalVideo"
+               controls
+               playsinline
+               class="hidden w-full h-full object-contain"></video>
+        <img id="modalImage"
+             class="hidden w-full h-full object-contain bg-white" />
+      </div>
+    </div>
+
+    <!-- Text -->
+    <div class="overflow-y-auto pr-1 lg:pr-2">
+      <h3 id="modalTitle"
+          class="text-lg md:text-xl lg:text-2xl font-semibold leading-snug">
+      </h3>
+      <p id="modalDate" class="text-xs text-gray-400 mt-1"></p>
+      <p id="modalDescription"
+         class="mt-3 text-sm md:text-base lg:text-lg text-gray-700 leading-relaxed">
+      </p>
+
+      <!-- Nav Buttons -->
+<div class="flex gap-3 mt-6">
+  <button
+    id="prevModal"
+    class="flex items-center gap-2 px-5 py-2.5
+           bg-gray-200 rounded-full
+           hover:bg-gray-300 transition
+           text-sm font-medium"
+  >
+    <svg xmlns="http://www.w3.org/2000/svg"
+         class="w-4 h-4"
+         fill="none"
+         viewBox="0 0 24 24"
+         stroke="currentColor">
+      <path stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M15 19l-7-7 7-7" />
+    </svg>
+    Prev
+  </button>
+
+  <button
+    id="nextModal"
+    class="flex items-center gap-2 px-5 py-2.5
+           bg-gray-200 rounded-full
+           hover:bg-gray-300 transition
+           text-sm font-medium"
+  >
+    Next
+    <svg xmlns="http://www.w3.org/2000/svg"
+         class="w-4 h-4"
+         fill="none"
+         viewBox="0 0 24 24"
+         stroke="currentColor">
+      <path stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M9 5l7 7-7 7" />
+    </svg>
+  </button>
+</div>
+
+    </div>
+  </div>
+</div>
+
+
+
+<!-- SCRIPT -->
+<script>
+  const modal = document.getElementById("socialModal");
+  const video = document.getElementById("modalVideo");
+  const image = document.getElementById("modalImage");
+  const title = document.getElementById("modalTitle");
+  const date = document.getElementById("modalDate");
+  const desc = document.getElementById("modalDescription");
+  const closeBtn = document.getElementById("closeModal");
+  const nextBtn = document.getElementById("nextModal");
+  const prevBtn = document.getElementById("prevModal");
+
+  const cards = Array.from(document.querySelectorAll(".social-card"));
+  let currentIndex = 0;
+
+  function openModal(index) {
+    const card = cards[index];
+    modal.classList.remove("hidden");
+    currentIndex = index;
+    title.textContent = card.dataset.title;
+    date.textContent = card.dataset.date;
+    desc.textContent = card.dataset.description;
+
+    if (card.dataset.type === "reel") {
+      image.classList.add("hidden");
+      video.classList.remove("hidden");
+      video.src = card.dataset.video;
+      video.play();
+    } else {
+      video.pause();
+      video.removeAttribute("src");
+      video.classList.add("hidden");
+      image.src = card.dataset.image;
+      image.classList.remove("hidden");
+    }
+  }
+
+  cards.forEach((card, index) => {
+    card.addEventListener("click", () => openModal(index));
+  });
+
+  closeBtn.onclick = () => {
+    modal.classList.add("hidden");
+    video.pause();
+    video.removeAttribute("src");
+  };
+
+  nextBtn.onclick = () => openModal((currentIndex + 1) % cards.length);
+  prevBtn.onclick = () =>
+    openModal((currentIndex - 1 + cards.length) % cards.length);
+
+  modal.onclick = (e) => {
+    if (e.target === modal) closeBtn.click();
+  };
+</script>
