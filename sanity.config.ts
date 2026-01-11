@@ -20,8 +20,8 @@ export default defineConfig({
             {
               title: 'Website',
               name: 'bullette',
-              apiId: 'a8b497e5-ca2b-4704-8b2f-709e6f642b03',
-              buildHookId: '696415b798dfcda0acc20457',
+              apiId: '5f994c26-33f9-4300-bf98-e742aa9921ad',
+              buildHookId: '69641d18e2f6a8a61bbe8ee9',
               url: 'https://bullette.netlify.app/',
             },
           ],
