@@ -5,8 +5,8 @@
   <div
     class="sm:container mx-auto flex items-center justify-between
            px-4 sm:px-6 py-3 md:py-4
-           bg-white sm:rounded-3xl sm:mt-3
-           border border-gray-200 shadow-sm"
+           bg-white sm:rounded-full sm:mt-3
+           border border-gray-200"
   >
 
     <!-- Logo -->
@@ -21,7 +21,7 @@
 
     <!-- Desktop Nav -->
     <nav
-      class="hidden md:flex items-center gap-10
+      class="hidden xl:flex items-center gap-10
              text-gray-800 font-medium tracking-wide"
     >
       <a href="/" class="hover:text-red-600 transition">HOME</a>
@@ -68,7 +68,7 @@
       <button
         id="menuIcon"
         aria-label="open menu"
-        class="md:hidden rounded-lg p-1 hover:bg-gray-100 transition"
+        class="xl:hidden rounded-full p-2 bg-gray-100 hover:bg-gray-100 transition"
       >
         <img
           src="/icons/hamburger.svg"
@@ -91,9 +91,9 @@
   <!-- Close Button -->
   <button
     id="closesidebar"
-    class="absolute top-5 right-5 flex items-center justify-center w-10 h-10 rounded-full bg-gray-100 hover:bg-gray-200 transition-all"
+    class="absolute top-5 right-5 flex items-center justify-center p-2 rounded-full bg-gray-100 hover:bg-gray-200 transition-all"
   >
-    <img src="/icons/X.svg" alt="Close Menu" class="w-6 h-6 pointer-events-none" />
+    <img src="/icons/X.svg" alt="Close Menu" class="w-7 h-7 pointer-events-none" />
   </button>
 
   <!-- Content Wrapper -->

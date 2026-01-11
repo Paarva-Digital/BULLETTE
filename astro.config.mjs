@@ -12,7 +12,7 @@ const isProd = process.env.NODE_ENV === 'production'
 export default defineConfig({
   integrations: [
     sanity({
-      projectId: 'i50yhrg7',
+      projectId: '7c02o7qh',
       dataset: 'production',
       useCdn: false,
       apiVersion: '2026-01-07',

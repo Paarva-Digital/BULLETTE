@@ -37,10 +37,6 @@ const product = await sanity.fetch(
   { slug }
 );
 
-if (!product) {
-  throw new Error("Product not found");
-}
-
 // ---- Extended fallback logic (unchanged) ----
 let extendedDetails = {
   overview: "",
