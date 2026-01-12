@@ -1,17 +1,17 @@
 // @ts-check
 import { defineConfig } from 'astro/config'
 import path from 'node:path'
-
 import sanity from '@sanity/astro'
 import react from '@astrojs/react'
 import tailwindcss from '@tailwindcss/vite'
-import netlify from '@astrojs/netlify'
+
+import netlify from '@astrojs/netlify';
 
 const isProd = process.env.NODE_ENV === 'production'
 
 export default defineConfig({
   integrations: [
-    sanity({
+        sanity({
       projectId: '7c02o7qh',
       dataset: 'production',
       useCdn: false,
@@ -28,7 +28,6 @@ export default defineConfig({
         '@': path.resolve('./src'),
       },
     },
-    // 🔑 Prevent Vite from choking on Sanity + Netlify
     optimizeDeps: {
       exclude: ['@sanity/astro'],
     },

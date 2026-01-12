@@ -11,14 +11,13 @@ export default defineConfig({
 
   plugins: [
     structureTool(),
-
     dashboardTool({
       widgets: [
         netlifyWidget({
-          title: 'Netlify Deploy',
+          title: 'Deploy Bullette Website',
           sites: [
             {
-              title: 'Website',
+              title: 'Bullette Website',
               name: 'bullette',
               apiId: '5f994c26-33f9-4300-bf98-e742aa9921ad',
               buildHookId: '69641d18e2f6a8a61bbe8ee9',
