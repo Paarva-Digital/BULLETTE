@@ -64,20 +64,45 @@ const styleMap = {
 
           <div class="pt-3">
             <a
-              href={slide.ctaLink}
-              class={`inline-flex items-center justify-center
-                h-11 sm:h-12 px-6 sm:px-8
-                rounded-full
-                bg-red-600 text-white
-                text-sm sm:text-base
-                ${styles.ctaWeight}
-                hover:bg-red-700
-                transition-all duration-300
-                shadow-lg
-                ${styles.ctaShadow}`}
-            >
-              {slide.ctaLabel}
-            </a>
+  href={slide.ctaLink}
+  class={`group inline-flex items-center
+    h-12
+    pl-6 pr-1
+    rounded-full
+    bg-red-600 text-white
+    text-sm sm:text-base
+    ${styles.ctaWeight}
+    transition-all duration-300
+    hover:bg-red-700
+    shadow-lg
+    ${styles.ctaShadow}`}
+>
+  <!-- TEXT -->
+  <span class="mr-4">
+    {slide.ctaLabel}
+  </span>
+
+  <!-- ARROW WRAPPER (PERFECT INSET) -->
+  <span
+    class="flex items-center justify-center
+           w-10 h-10
+           rounded-full
+           bg-white"
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      class="w-5 h-5 text-red-600"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+      stroke-width="2"
+    >
+      <path stroke-linecap="round" stroke-linejoin="round"
+            d="M5 12h14M13 5l7 7-7 7" />
+    </svg>
+  </span>
+</a>
+
           </div>
 
         </div>
@@ -138,18 +163,17 @@ const styleMap = {
              rounded-full
              bg-white/10 backdrop-blur-md
              border border-white/20
-             px-2 sm:px-3 py-1
+             px-2 sm:px-3 py-1.5
              shadow-lg shadow-black/30"
-    >
+             >
 
       <!-- Prev -->
       <button
         class="heroSwiper-prevBtn
-               w-9 h-9 sm:w-10 sm:h-10
+               w-5 h-5
                flex items-center justify-center
                rounded-full
-               text-white text-base sm:text-lg
-               hover:bg-white/20
+               text-black text-base sm:text-lg
                transition-all duration-300"
         aria-label="Previous slide"
       >
@@ -159,38 +183,22 @@ const styleMap = {
       <!-- Autoplay -->
       <button
         class="heroSwiper-autoplayControl
-               w-9 h-9 sm:w-10 sm:h-10
+               w-5 h-5
                flex items-center justify-center
                rounded-full
-               bg-white/20
-               hover:bg-white/30
+
                transition-all duration-300"
         aria-label="Pause autoplay"
       >
-        <svg
-          width="14"
-          height="14"
-          viewBox="0 0 16 16"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            fill-rule="evenodd"
-            clip-rule="evenodd"
-            d="M4 2C3.44772 2 3 2.44772 3 3V13C3 13.5523 3.44772 14 4 14H6C6.55228 14 7 13.5523 7 13V3C7 2.44772 6.55228 2 6 2H4ZM10 2C9.44772 2 9 2.44772 9 3V13C9 13.5523 9.44772 14 10 14H12C12.5523 14 13 13.5523 13 13V3C13 2.44772 12.5523 2 12 2H10Z"
-            fill="white"
-          />
-        </svg>
       </button>
 
       <!-- Next -->
       <button
         class="heroSwiper-nextBtn
-               w-9 h-9 sm:w-10 sm:h-10
+               w-5 h-5
                flex items-center justify-center
                rounded-full
-               text-white text-base sm:text-lg
-               hover:bg-white/20
+               text-black text-base sm:text-lg
                transition-all duration-300"
         aria-label="Next slide"
       >
@@ -319,40 +327,54 @@ document.addEventListener('DOMContentLoaded', () => {
 <!-- Swiper Control Script -->
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-  const swiperEl = document.querySelector('.heroSwiper-main') as any;
+  const swiperEl = document.querySelector('.heroSwiper-main');
   const nextBtn = document.querySelector('.heroSwiper-nextBtn');
   const prevBtn = document.querySelector('.heroSwiper-prevBtn');
   const controlBtn = document.querySelector('.heroSwiper-autoplayControl');
 
-  // ✅ Navigation buttons
+  if (!swiperEl || !controlBtn) return;
+
+  // Navigation
   nextBtn?.addEventListener('click', () => swiperEl.swiper.slideNext());
   prevBtn?.addEventListener('click', () => swiperEl.swiper.slidePrev());
 
-  // ✅ Play/Pause control
-  controlBtn?.addEventListener('click', () => {
+  // SVG templates (BLACK icons)
+  const playIcon = `
+    <svg width="16" height="16" viewBox="0 0 16 16"
+      xmlns="http://www.w3.org/2000/svg">
+      <path
+        d="M11.5708 8.85749C12.2182 8.46909 12.2182 7.53091 11.5708 7.14251L4.5145 2.9087C3.84797 2.50878 3 2.9889 3 3.76619V12.2338C3 13.0111 3.84797 13.4912 4.5145 13.0913L11.5708 8.85749Z"
+        fill="#000000"
+      />
+    </svg>
+  `;
+
+  const pauseIcon = `
+    <svg width="16" height="16" viewBox="0 0 16 16"
+      xmlns="http://www.w3.org/2000/svg">
+      <rect x="3" y="2" width="3" height="12" fill="#000000"/>
+      <rect x="10" y="2" width="3" height="12" fill="#000000"/>
+    </svg>
+  `;
+
+  // 🔥 INITIAL STATE SYNC (THIS IS THE FIX)
+  const updateIcon = () => {
+    controlBtn.innerHTML = swiperEl.swiper.autoplay.running
+      ? pauseIcon   // autoplay ON → show pause
+      : playIcon;   // autoplay OFF → show play
+  };
+
+  // Set correct icon on load
+  updateIcon();
+
+  // Play / Pause toggle
+  controlBtn.addEventListener('click', () => {
     if (swiperEl.swiper.autoplay.running) {
-      // Stop autoplay
       swiperEl.swiper.autoplay.stop();
-      controlBtn.innerHTML = `
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
-          xmlns="http://www.w3.org/2000/svg">
-          <path fill-rule="evenodd" clip-rule="evenodd"
-            d="M11.5708 8.85749C12.2182 8.46909 12.2182 7.53091 11.5708 7.14251L4.5145 2.9087C3.84797 2.50878 3 2.9889 3 3.76619V12.2338C3 13.0111 3.84797 13.4912 4.5145 13.0913L11.5708 8.85749Z"
-            fill="black"/>
-        </svg>
-      `;
     } else {
-      // Start autoplay
       swiperEl.swiper.autoplay.start();
-      controlBtn.innerHTML = `
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
-          xmlns="http://www.w3.org/2000/svg">
-          <rect x="3" y="2" width="3" height="12" fill="black"/>
-          <rect x="10" y="2" width="3" height="12" fill="black"/>
-        </svg>
-      `;
     }
+    updateIcon();
   });
 });
-
 </script>

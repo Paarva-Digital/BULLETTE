@@ -19,11 +19,48 @@
     <!-- CTA Buttons -->
     <div class="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
       <a
-        href="/products"
-        class="inline-flex items-center justify-center px-7 py-3 rounded-full bg-white text-black font-medium hover:bg-red-600 hover:text-white transition"
-      >
-        Explore Products
-      </a>
+  href="/products"
+  class="group relative inline-flex items-center
+         h-14 sm:h-16
+         pl-7 sm:pl-8 pr-16 sm:pr-20
+         rounded-full
+         bg-white text-black font-medium
+         text-base sm:text-lg
+         transition-all duration-300 ease-out
+         hover:bg-red-600 hover:text-white"
+>
+  <!-- TEXT (SAFE ZONE) -->
+  <span class="whitespace-nowrap">
+    Explore Products
+  </span>
+
+  <!-- ARROW (ABSOLUTE, LOCKED RIGHT) -->
+  <span
+    class="absolute right-2 sm:right-3
+           flex items-center justify-center
+           w-11 h-11 sm:w-12 sm:h-12
+           rounded-full
+           bg-red-600
+           transition-all duration-300
+           group-hover:bg-white"
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      class="w-5 h-5 sm:w-6 sm:h-6
+             text-white
+             group-hover:text-red-600"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+      stroke-width="2"
+    >
+      <path stroke-linecap="round" stroke-linejoin="round"
+            d="M5 12h14M13 5l7 7-7 7" />
+    </svg>
+  </span>
+</a>
+
+
 
       <a
         href="/contact"
