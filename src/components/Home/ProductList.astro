@@ -1,16 +1,24 @@
 ---
 const { categories = [] } = Astro.props;
 
+// Mapping of category names to their URL slugs
+const categoryMapping = {
+  "Lighting": "lighting",
+  "Switch & Socket": "switch-socket",
+  "Wiring Accessories": "wiring-accessories",
+  "GI Conduit & Accessories": "gi-conduit-accessories",
+  "Connectors": "connectors",
+  "Cable Management": "cable-management",
+  "Cable Management System": "cable-management",
+  "Tools": "tools",
+};
+
 const items = categories.map(cat => ({
   name: cat.name,
   img: cat.image?.asset?.url || '/images/Products/Bulb.png',
-  link: `/products/${cat.slug}`,
+  link: `/products/${categoryMapping[cat.name] || cat.name.toLowerCase().replace(/\s+/g, '-')}`,
 }));
 ---
-
-
-
-
 
 <!-- Swiper Web Components MUST be registered -->
 <section class="bg-gray-100 py-16 sm:py-20">

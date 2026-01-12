@@ -1,20 +1,19 @@
 ---
 const { section } = Astro.props;
-
 if (!section) return;
 
-const {
-  heading = "",
-  subheading = "",
-  items = [],
-} = section;
+const { heading = "", subheading = "", items = [] } = section;
+
+function formatDate(date) {
+  if (!date) return "";
+  return new Date(date).toISOString().slice(0, 10);
+}
 ---
 
-<!-- SOCIAL FEED SECTION -->
+<!-- ================= SOCIAL FEED ================= -->
 <section class="w-full py-16 bg-gray-50">
   <div class="container mx-auto px-6">
 
-    <!-- Heading -->
     <h2 class="text-3xl sm:text-4xl font-medium text-gray-900">
       {heading}
     </h2>
@@ -22,172 +21,132 @@ const {
       {subheading}
     </p>
 
-    <!-- Swiper Carousel -->
     <swiper-container
       slides-per-view="1"
       space-between="16"
-      breakpoints='{"640":{"slidesPerView":2,"spaceBetween":20},"1024":{"slidesPerView":4,"spaceBetween":24}}'
+      breakpoints='{"640":{"slidesPerView":2},"1024":{"slidesPerView":4}}'
       class="mt-10"
       loop="true"
       autoplay-delay="2000"
-      disable-on-interaction="false"
       speed="800"
-      navigation="false"
     >
-
-      {items.map((item) => (
+      {items.map((item, index) => (
         <swiper-slide>
-          <div
-            class="social-card group bg-white rounded-3xl shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all cursor-pointer overflow-hidden"
-            data-type={item.type}
-            data-title={item.title}
-            data-date={item.dateLabel}
-            data-description={item.description}
-            data-image={item.image?.asset?.url}
-            data-video={item.video?.asset?.url}
-          >
-            <!-- Media -->
-            <div class="relative aspect-[4/5] bg-gray-100 overflow-hidden">
-              <img
-                src={
-                  item.image?.asset?.url ??
-                  "/images/placeholder.png"
-                }
-                class="w-full h-full object-cover group-hover:scale-105 transition"
-                alt={item.title}
-              />
+          <div class="bg-white rounded-3xl shadow-sm overflow-hidden mb-10">
 
-              {item.type === "reel" && (
-                <>
-                  <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
-                  <div class="absolute inset-0 flex items-center justify-center">
-                    <div class="bg-white/90 rounded-full px-5 py-3.5 text-lg">
-                      ▶
-                    </div>
-                  </div>
-                </>
-              )}
-            </div>
+            <!-- MEDIA (ONLY THIS OPENS MODAL) -->
+            <button
+  type="button"
+  class="media-trigger relative aspect-[4/5] w-full bg-gray-100 overflow-hidden"
+  data-index={index}
+  data-type={item.type}
+  data-title={item.title}
+  data-date={formatDate(item.date)}
+  data-description={item.description}
+  data-image={
+    item.image?.asset?.url ||
+    item.thumbnail?.asset?.url
+  }
+  data-video={item.video?.asset?.url}
+  data-instagram={item.instagramUrl}
+>
+  <img
+    src={
+      item.image?.asset?.url ||
+      item.thumbnail?.asset?.url ||
+      "/images/placeholder.png"
+    }
+    class="w-full h-full object-cover hover:scale-105 transition"
+    alt={item.title}
+  />
 
-            <!-- Content -->
+  {item.type === "reel" && (
+    <div class="absolute inset-0 flex items-center justify-center">
+      <div class="bg-white/90 rounded-full px-5 py-3 text-lg">▶</div>
+    </div>
+  )}
+</button>
+
+
+            <!-- CONTENT -->
             <div class="p-4 space-y-3">
               <p class="text-sm text-gray-800 line-clamp-3">
                 {item.description}
               </p>
 
               <div class="flex items-center justify-between">
-                <img
-                  src="/icons/64px-Instagram_logo_2022.svg.png"
-                  class="w-6 h-6"
-                  alt="Instagram"
-                />
+                <a
+                  href={item.instagramUrl}
+                  target="_blank"
+                  rel="noopener"
+                >
+                  <img
+                    src="/icons/64px-Instagram_logo_2022.svg.png"
+                    class="w-6 h-6"
+                    alt="Instagram"
+                  />
+                </a>
+
                 <span class="text-xs text-gray-500">
-                  {item.dateLabel}
-                </span>
+  {formatDate(item.date)}
+</span>
+
               </div>
             </div>
+
           </div>
         </swiper-slide>
       ))}
-
     </swiper-container>
   </div>
 </section>
 
+<!-- ================= MODAL ================= -->
+<div
+  id="socialModal"
+  class="fixed inset-0 bg-black/70 hidden z-50
+         flex items-center justify-center px-4"
+>
+  <div class="relative bg-white rounded-2xl max-w-[1000px] w-full
+              grid md:grid-cols-[360px_1fr] gap-6 p-6">
 
-
-<!-- MODAL -->
-<!-- MODAL -->
-<div id="socialModal"
-     class="fixed inset-0 bg-black/70 hidden z-50 flex items-center justify-center px-4 sm:px-6 lg:px-8">
-  <div
-    class="relative bg-white rounded-2xl w-full max-w-[1000px]
-           grid md:grid-cols-[360px_1fr] gap-6 lg:gap-8 p-5 lg:p-8
-           shadow-2xl max-h-[90vh] overflow-hidden">
-
-    <!-- Close -->
     <button id="closeModal"
-            class="absolute top-4 right-4 w-10 h-10
-                   rounded-full bg-black/60 text-white text-base
-                   flex items-center justify-center
-                   hover:bg-black hover:scale-105 transition">
+      class="absolute top-4 right-4 w-10 h-10 rounded-full bg-black/60 text-white">
       ✕
     </button>
 
-    <!-- Media -->
-    <div class="flex justify-center items-center">
-      <div
-        class="aspect-[4/5] w-full max-w-[360px]
-               bg-black rounded-xl overflow-hidden flex items-center justify-center">
-        <video id="modalVideo"
-               controls
-               playsinline
-               class="hidden w-full h-full object-contain"></video>
-        <img id="modalImage"
-             class="hidden w-full h-full object-contain bg-white" />
+    <div class="flex justify-center">
+      <div class="aspect-[4/5] w-full max-w-[360px] bg-black rounded-xl overflow-hidden">
+        <video id="modalVideo" controls class="hidden w-full h-full"></video>
+        <img id="modalImage" class="hidden w-full h-full object-contain bg-white" />
       </div>
     </div>
 
-    <!-- Text -->
-    <div class="overflow-y-auto pr-1 lg:pr-2">
-      <h3 id="modalTitle"
-          class="text-lg md:text-xl lg:text-2xl font-semibold leading-snug">
-      </h3>
+    <div>
+      <h3 id="modalTitle" class="text-xl font-semibold"></h3>
       <p id="modalDate" class="text-xs text-gray-400 mt-1"></p>
-      <p id="modalDescription"
-         class="mt-3 text-sm md:text-base lg:text-lg text-gray-700 leading-relaxed">
-      </p>
+      <p id="modalDescription" class="mt-3 text-gray-700"></p>
 
-      <!-- Nav Buttons -->
-<div class="flex gap-3 mt-6">
-  <button
-    id="prevModal"
-    class="flex items-center gap-2 px-5 py-2.5
-           bg-gray-200 rounded-full
-           hover:bg-gray-300 transition
-           text-sm font-medium"
-  >
-    <svg xmlns="http://www.w3.org/2000/svg"
-         class="w-4 h-4"
-         fill="none"
-         viewBox="0 0 24 24"
-         stroke="currentColor">
-      <path stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M15 19l-7-7 7-7" />
-    </svg>
-    Prev
-  </button>
+      <a
+        id="modalInstagram"
+        target="_blank"
+        rel="noopener"
+        class="inline-block mt-5 px-5 py-2.5 rounded-full
+               bg-gradient-to-r from-pink-500 to-orange-500
+               text-white text-sm font-medium"
+      >
+        View on Instagram
+      </a>
 
-  <button
-    id="nextModal"
-    class="flex items-center gap-2 px-5 py-2.5
-           bg-gray-200 rounded-full
-           hover:bg-gray-300 transition
-           text-sm font-medium"
-  >
-    Next
-    <svg xmlns="http://www.w3.org/2000/svg"
-         class="w-4 h-4"
-         fill="none"
-         viewBox="0 0 24 24"
-         stroke="currentColor">
-      <path stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M9 5l7 7-7 7" />
-    </svg>
-  </button>
-</div>
-
+      <div class="flex gap-3 mt-6">
+        <button id="prevModal" class="px-4 py-2 bg-gray-200 rounded-full">Prev</button>
+        <button id="nextModal" class="px-4 py-2 bg-gray-200 rounded-full">Next</button>
+      </div>
     </div>
   </div>
 </div>
 
-
-
-<!-- SCRIPT -->
+<!-- ================= SCRIPT ================= -->
 <script>
   const modal = document.getElementById("socialModal");
   const video = document.getElementById("modalVideo");
@@ -195,50 +154,51 @@ const {
   const title = document.getElementById("modalTitle");
   const date = document.getElementById("modalDate");
   const desc = document.getElementById("modalDescription");
-  const closeBtn = document.getElementById("closeModal");
-  const nextBtn = document.getElementById("nextModal");
-  const prevBtn = document.getElementById("prevModal");
+  const instaBtn = document.getElementById("modalInstagram");
 
-  const cards = Array.from(document.querySelectorAll(".social-card"));
+  const triggers = Array.from(document.querySelectorAll(".media-trigger"));
   let currentIndex = 0;
 
   function openModal(index) {
-    const card = cards[index];
+    const el = triggers[index];
     modal.classList.remove("hidden");
     currentIndex = index;
-    title.textContent = card.dataset.title;
-    date.textContent = card.dataset.date;
-    desc.textContent = card.dataset.description;
 
-    if (card.dataset.type === "reel") {
+    title.textContent = el.dataset.title;
+    date.textContent = el.dataset.date;
+    desc.textContent = el.dataset.description;
+    instaBtn.href = el.dataset.instagram;
+
+    if (el.dataset.type === "reel") {
       image.classList.add("hidden");
       video.classList.remove("hidden");
-      video.src = card.dataset.video;
+      video.src = el.dataset.video;
       video.play();
     } else {
       video.pause();
-      video.removeAttribute("src");
+      video.src = "";
       video.classList.add("hidden");
-      image.src = card.dataset.image;
+      image.src = el.dataset.image;
       image.classList.remove("hidden");
     }
   }
 
-  cards.forEach((card, index) => {
-    card.addEventListener("click", () => openModal(index));
-  });
+  triggers.forEach((el, i) =>
+    el.addEventListener("click", e => {
+      e.stopPropagation();
+      openModal(i);
+    })
+  );
 
-  closeBtn.onclick = () => {
+  document.getElementById("closeModal").onclick = () => {
     modal.classList.add("hidden");
     video.pause();
-    video.removeAttribute("src");
+    video.src = "";
   };
 
-  nextBtn.onclick = () => openModal((currentIndex + 1) % cards.length);
-  prevBtn.onclick = () =>
-    openModal((currentIndex - 1 + cards.length) % cards.length);
+  document.getElementById("nextModal").onclick = () =>
+    openModal((currentIndex + 1) % triggers.length);
 
-  modal.onclick = (e) => {
-    if (e.target === modal) closeBtn.click();
-  };
+  document.getElementById("prevModal").onclick = () =>
+    openModal((currentIndex - 1 + triggers.length) % triggers.length);
 </script>

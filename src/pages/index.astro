@@ -55,21 +55,29 @@ const home = await sanity.fetch(`
     },
 
     socialFeed{
-      heading,
-      subheading,
-      items[]{
-        type,
-        title,
-        description,
-        dateLabel,
-        image{
-          asset->{url}
-        },
-        video{
-          asset->{url}
-        }
-      }
+  heading,
+  subheading,
+  items[] | order(date desc)[0...4]{
+    type,
+    title,
+    description,
+    date,
+    instagramUrl,
+
+    image{
+      asset->{url}
     },
+
+    thumbnail{
+      asset->{url}
+    },
+
+    video{
+      asset->{url}
+    }
+  }
+},
+
 
     blogSection{
       heading,
@@ -87,6 +95,7 @@ const home = await sanity.fetch(`
     }
   }
 `);
+
 ---
 
 
