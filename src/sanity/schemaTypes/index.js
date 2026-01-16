@@ -5,6 +5,7 @@ import ftdProducts from './ftdProducts'
 import { socialFeed, socialItem } from './socialFeed'
 import blogPost from './blogPost'
 import blogSection from './blogSection'
+import ultraProduct from './ultraProduct'
 
 export const schemaTypes = [
   product,
@@ -15,4 +16,5 @@ export const schemaTypes = [
   blogPost,
   socialFeed,
   socialItem,
+  ultraProduct
 ]

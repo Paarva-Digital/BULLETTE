@@ -7,11 +7,51 @@ import ProductShare from "@/components/Products/ProductShare.astro";
 import Footer from "@/components/Global/Footer.astro";
 import { sanity } from "@/sanity/lib/sanity";
 
-export const prerender = false;
+export const prerender = true;
+
+export async function getStaticPaths() {
+  type ProductPath = {
+    slug: string;
+    category: string;
+  };
+
+  const products = await sanity.fetch<ProductPath[]>(`
+    *[_type == "product"]{
+      "slug": slug.current,
+      category
+    }
+  `);
+
+  return products.map((product: ProductPath) => ({
+    params: {
+      category: product.category,
+      slug: product.slug
+    }
+  }));
+}
 
 const { category, slug } = Astro.params;
 
-const product = await sanity.fetch(
+type Product = {
+  _id: string;
+  name: string;
+  slug: string;
+  category: string;
+  tag?: string;
+  shortDescription?: string;
+  description?: string;
+  overview?: string;
+  technical?: string[];
+  applications?: string[];
+  standards?: string[];
+  image?: string;
+  features?: string[];
+  images?: { asset: { url: string }; alt?: string }[];
+  specs?: Record<string, string>;
+  pdf?: string;
+};
+
+const product = await sanity.fetch<Product>(
   `
   *[_type == "product" && slug.current == $slug][0]{
     _id,
@@ -38,7 +78,14 @@ const product = await sanity.fetch(
 );
 
 // ---- Extended fallback logic (unchanged) ----
-let extendedDetails = {
+type ExtendedDetails = {
+  overview: string;
+  technical: string[];
+  applications: string[];
+  standards: string[];
+};
+
+let extendedDetails: ExtendedDetails = {
   overview: "",
   technical: [],
   applications: [],
@@ -54,7 +101,7 @@ try {
   console.warn(`No extended details found for: ${slug}`);
 }
 
-const finalExtendedDetails = {
+const finalExtendedDetails: ExtendedDetails = {
   overview: product.overview || extendedDetails.overview,
   technical: product.technical?.length
     ? product.technical
@@ -73,7 +120,11 @@ const finalExtendedDetails = {
 <Layout>
   <Navbar />
 
-  <main class=" container px-3 mx-auto pt-24 sm:pt-40">
+  <main
+  data-pagefind-body
+  data-pagefind-meta-name={product.name}
+  data-pagefind-meta-category={product.category}
+  class=" container px-3 mx-auto pt-24 sm:pt-40">
     {product ? (
       <section class="container mx-auto px-4 pb-16">
 
@@ -140,6 +191,7 @@ const finalExtendedDetails = {
 }
 
                 alt={product.name}
+                data-pagefind-meta="image[src],image_alt[alt]"
                 class="w-full h-full object-contain transition-opacity duration-300"
               />
             </div>
@@ -147,7 +199,7 @@ const finalExtendedDetails = {
             <!-- THUMBNAILS -->
             {product?.images?.length > 1 && (
               <div class="flex gap-3 overflow-x-auto pb-2 -mx-1 px-1">
-                {product.images.map((img, index) => (
+                {product.images.map((img: { asset: { url: string }; alt?: string }, index: number) => (
                   <button
                     class="thumb shrink-0 aspect-square w-20 sm:w-24
                            rounded-xl sm:rounded-2xl overflow-hidden
@@ -189,7 +241,7 @@ const finalExtendedDetails = {
 
             {product?.features?.length && (
               <ul class="mt-5 sm:mt-6 space-y-2 text-sm sm:text-base text-gray-700 list-disc list-inside">
-                {product.features.map((f) => (
+                {product.features.map((f: string) => (
                   <li>{f}</li>
                 ))}
               </ul>
@@ -299,21 +351,23 @@ const finalExtendedDetails = {
 
 <script>
   document.addEventListener("DOMContentLoaded", () => {
-    const mainImage = document.getElementById("mainImage")
-    const thumbs = document.querySelectorAll(".thumb")
+    const mainImage = document.getElementById("mainImage") as HTMLImageElement | null;
+    const thumbs = document.querySelectorAll<HTMLButtonElement>(".thumb");
+
+    if (!mainImage) return;
 
     thumbs.forEach((btn) => {
       btn.addEventListener("click", () => {
-        const src = btn.getAttribute("data-img")
-        if (!src) return
+        const src = btn.getAttribute("data-img");
+        if (!src) return;
 
-        mainImage.classList.add("opacity-0")
+        mainImage.classList.add("opacity-0");
 
         setTimeout(() => {
-          mainImage.src = src
-          mainImage.classList.remove("opacity-0")
-        }, 150)
-      })
-    })
-  })
+          mainImage.src = src;
+          mainImage.classList.remove("opacity-0");
+        }, 150);
+      });
+    });
+  });
 </script>

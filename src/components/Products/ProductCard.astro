@@ -15,7 +15,6 @@ class="
 "
   data-tag={Array.isArray(product.tag) ? product.tag.join(",") : product.tag ?? ""}
 >
-
   <!-- subtle surface activation -->
   <div
     class="
@@ -53,6 +52,7 @@ class="
         src={product.image ?? "/images/placeholder.png"}
         alt={product.alt ?? product.name}
         loading="lazy"
+        data-pagefind-meta="image[src],image_alt[alt]"
         class="
           h-full w-full object-contain
           transition-all duration-500 contrast-110
@@ -70,6 +70,7 @@ saturate-105
         "
       >
         <span
+          data-pagefind-ignore
           class="
             inline-flex items-center gap-3
             rounded-full
@@ -123,6 +124,7 @@ saturate-105
 
     <!-- Mobile affordance -->
 <span
+  data-pagefind-ignore
   class="
     inline-flex items-center gap-2
     rounded-full
@@ -147,5 +149,4 @@ saturate-105
 
 
   </div>
-
 </a>

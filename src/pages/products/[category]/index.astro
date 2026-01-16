@@ -7,11 +7,34 @@ import ProductCard from "../../../components/Products/ProductCard.astro";
 import Footer from "@/components/Global/Footer.astro";
 import { sanity } from "@/sanity/lib/sanity";
 
-export const prerender = false;
+// ✅ STATIC GENERATION
+export const prerender = true;
+
+// ✅ TELL ASTRO ALL CATEGORIES
+export async function getStaticPaths() {
+  const categories = await sanity.fetch(`
+    *[_type == "product"]{ category }
+  `);
+
+  const uniqueCategories = [...new Set(categories.map((c: { category: string }) => c.category))];
+
+  return uniqueCategories.map(category => ({
+    params: { category }
+  }));
+}
 
 const { category } = Astro.params;
 
-const categoryProducts = await sanity.fetch(
+type CategoryProduct = {
+  name: string;
+  slug: string;
+  category: string;
+  tag?: string;
+  shortDescription?: string;
+  image?: string;
+};
+
+const categoryProducts = await sanity.fetch<CategoryProduct[]>(
   `*[_type == "product" && category == $category]{
     name,
     "slug": slug.current,
@@ -24,7 +47,7 @@ const categoryProducts = await sanity.fetch(
 );
 
 const tags = categoryProducts.length
-  ? [...new Set(categoryProducts.map((p) => p.tag).filter(Boolean))]
+  ? [...new Set(categoryProducts.map((p: CategoryProduct) => p.tag).filter(Boolean))]
   : [];
 ---
 
@@ -34,6 +57,8 @@ const tags = categoryProducts.length
   <Navbar />
   <CategoryTabs />
 
+  <!-- Exclude category listing page from Pagefind; only individual product pages are indexed -->
+  <main data-pagefind-ignore>
   {categoryProducts.length > 0 ? (
     <>
       <FilterBar tags={tags} />
@@ -58,5 +83,6 @@ const tags = categoryProducts.length
       </p>
     </div>
   )}
+  </main>
 <Footer/>
 </Layout>

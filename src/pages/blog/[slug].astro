@@ -46,7 +46,8 @@ const relatedPosts = await sanity.fetch(
 <Layout>
   <Navbar />
 
-  <article class="bg-white py-24 sm:py-40">
+  <!-- Exclude blog article content from Pagefind index -->
+  <article data-pagefind-ignore class="bg-white py-24 sm:py-40">
     <div class="container mx-auto px-6">
 
       <!-- GRID -->

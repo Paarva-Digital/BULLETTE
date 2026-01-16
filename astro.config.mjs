@@ -4,7 +4,7 @@ import path from 'node:path'
 import sanity from '@sanity/astro'
 import react from '@astrojs/react'
 import tailwindcss from '@tailwindcss/vite'
-
+import pagefind from "astro-pagefind";
 import netlify from '@astrojs/netlify';
 
 const isProd = process.env.NODE_ENV === 'production'
@@ -19,6 +19,10 @@ export default defineConfig({
       studioBasePath: '/admin',
     }),
     react(),
+    pagefind({
+      // optional but recommended
+      verbose: true,
+    }),
   ],
 
   vite: {

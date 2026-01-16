@@ -7,8 +7,10 @@ import Footer from '../components/Global/Footer.astro'
 <Layout>
   <Navbar />
 
-<!-- ================= HERO (ENHANCED) ================= -->
+  <!-- Mark About content as non-searchable for Pagefind -->
+  <!-- ================= HERO (ENHANCED) ================= -->
 <section
+  data-pagefind-ignore
   class="relative bg-gray-50
          pt-32 lg:pt-60 pb-10 md:pb-20 px-6 overflow-hidden"
 >
@@ -124,7 +126,7 @@ import Footer from '../components/Global/Footer.astro'
 
 
 <!-- ================= MANUFACTURING (ENHANCED) ================= -->
-<section class="relative bg-white py-10 lg:py-32 px-6 overflow-hidden">
+<section data-pagefind-ignore class="relative bg-white py-10 lg:py-32 px-6 overflow-hidden">
 
   <div class="container mx-auto grid grid-cols-1 lg:grid-cols-12 gap-14 items-center">
 
@@ -204,7 +206,7 @@ import Footer from '../components/Global/Footer.astro'
 
   <!-- ================= VISION / MISSION / VALUES ================= -->
 
-<section class="relative bg-gray-50 py-10 lg:py-32 px-6 overflow-hidden">
+<section data-pagefind-ignore class="relative bg-gray-50 py-10 lg:py-32 px-6 overflow-hidden">
 
   <!-- Soft background accent -->
   <div class="absolute -top-32 left-1/2 -translate-x-1/2
@@ -343,7 +345,7 @@ import Footer from '../components/Global/Footer.astro'
 
 
 <!-- ================= PRODUCTION PROCESS (ENHANCED) ================= -->
-<section class="relative bg-gray-50 py-10 lg:py-32 px-6 overflow-hidden">
+<section data-pagefind-ignore class="relative bg-gray-50 py-10 lg:py-32 px-6 overflow-hidden">
 
   <!-- Decorative background -->
   <div class="absolute top-0 right-0 w-160 h-160 bg-red-100/40 rounded-full blur-[140px] -z-10"></div>
@@ -502,7 +504,7 @@ import Footer from '../components/Global/Footer.astro'
 
 
   <!-- ================= CERTIFICATIONS ================= -->
-  <section class="bg-white pt-10 lg:py-28 px-6">
+  <section data-pagefind-ignore class="bg-white pt-10 lg:py-28 px-6">
     <div class="container mx-auto">
 
       <div class="text-center mb-16">

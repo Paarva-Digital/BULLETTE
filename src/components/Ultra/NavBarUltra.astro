@@ -53,25 +53,45 @@
     <div class="flex items-center gap-2">
 
       <!-- Download Brochure -->
-      <a
-        href="/brochure.pdf"
-        download
-        class="group hidden lg:flex items-center gap-3
-               text-black font-semibold
-               px-5 py-3 rounded-full
-               bg-linear-to-br from-red-500 to-yellow-400
-               hover:scale-[1.03] transition"
-      >
+<a
+  href="/brochure.pdf"
+  download
+  class="relative hidden lg:flex items-center justify-center
+         p-0.5 overflow-hidden
+         text-sm font-medium
+         rounded-full
+         group
+         bg-gradient-to-br from-red-500 to-yellow-500
+         hover:text-white
+         focus:outline-none focus:ring-4 focus:ring-red-200
+         transition"
+>
+  <!-- INNER SURFACE -->
+  <span
+    class="relative inline-flex items-center gap-3
+           px-5 py-3
+           bg-black
+           text-white
+           font-semibold
+           uppercase tracking-wide
+           rounded-full
+           transition-all duration-200 ease-in
+           group-hover:bg-transparent"
+  >
+    <!-- DOWNLOAD ICON -->
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="currentColor"
-          class="w-6 h-6 group-hover:translate-y-0.5 transition"
+          class="w-6 h-6 transition"
           viewBox="0 0 24 24"
         >
           <path d="M12 16l4-5h-3V4h-2v7H8l4 5zm8 2v2H4v-2h16z"/>
         </svg>
-        <span class="uppercase tracking-wide">Download Brochure</span>
-      </a>
+
+    <span>Download Brochure</span>
+  </span>
+</a>
+
 
       <!-- Mobile Menu -->
       <button
@@ -90,7 +110,7 @@
 <aside
   id="sidebar"
   class="fixed top-0 right-0 z-9999
-         w-3/5 max-w-sm h-screen
+         max-w-full h-screen
          bg-zinc-950 border-l border-white/10
          shadow-2xl
          translate-x-full transition-transform duration-500"
@@ -128,20 +148,21 @@
     <!-- Socials -->
     <div class="flex justify-center gap-5 mt-12">
       <a href="" class="w-12 h-12 flex items-center justify-center
-                bg-white rounded-xl hover:bg-red-500 transition">
-        <img src="/icons/social/fb.png" class="w-6 h-6" />
+                bg-white rounded-full hover:bg-red-500 transition">
+        <img src="/icons/social/fb.png" class="w-11 h-11" />
       </a>
       <a href="" class="w-12 h-12 flex items-center justify-center
-                bg-white rounded-xl hover:bg-red-500 transition">
-        <img src="/icons/social/wtsp.png" class="w-6 h-6" />
+                bg-white rounded-full hover:bg-red-500 transition">
+        <img src="/icons/social/wtsp.png" class="w-11 h-11" />
       </a>
       <a href="" class="w-12 h-12 flex items-center justify-center
-                bg-white rounded-xl hover:bg-red-500 transition">
-        <img src="/icons/social/insta.png" class="w-6 h-6" />
+                bg-white rounded-full hover:bg-red-500 transition">
+        <img src="/icons/social/insta.png" class="w-11 h-11" />
       </a>
     </div>
   </div>
 </aside>
+
 
 
 <script>

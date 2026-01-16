@@ -24,8 +24,9 @@ const posts = await sanity.fetch(`
 <Layout>
   <Navbar />
 
+  <!-- Exclude blog listing content from Pagefind index -->
   <!-- ================= BLOG INTRO ================= -->
-  <section class="bg-white pt-28 pb-16 sm:pt-32 sm:pb-20">
+  <section data-pagefind-ignore class="bg-white pt-28 pb-16 sm:pt-32 sm:pb-20">
     <div class="container mx-auto px-6">
 
       <div class="max-w-2xl">
@@ -48,7 +49,7 @@ const posts = await sanity.fetch(`
             href={`/blog/${post.slug}`}
             class="group rounded-3xl overflow-hidden bg-white
                    border border-gray-100
-                   shadow-sm hover:shadow-xl
+                   shadow-lg shadow-gray-100 hover:shadow-xl
                    transition-all duration-300
                    flex flex-col"
           >
@@ -84,13 +85,34 @@ const posts = await sanity.fetch(`
               )}
 
               <div class="mt-auto">
-                <span class="inline-flex items-center gap-2
-                             text-sm font-medium text-red-600
-                             group-hover:gap-3 transition-all">
-                  Read Article
-                  →
-                </span>
-              </div>
+  <span
+    class="inline-flex items-center gap-2
+           text-sm font-medium text-red-600
+           group-hover:gap-3
+           transition-all duration-300"
+  >
+    Read Article
+
+    <!-- Right Arrow SVG -->
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      class="w-4 h-4
+             transition-transform duration-300
+             group-hover:translate-x-1"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+      stroke-width="2"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        d="M5 12h14M13 5l7 7-7 7"
+      />
+    </svg>
+  </span>
+</div>
+
             </div>
           </a>
         ))}
@@ -98,67 +120,184 @@ const posts = await sanity.fetch(`
     </div>
   </section>
 
-  <!-- ================= TOPICS ================= -->
-  <section class="bg-gray-50 py-20">
-    <div class="container mx-auto px-6">
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
 
-        <div>
-          <h3 class="text-xl font-semibold text-gray-900 mb-4">
-            Product Safety
-          </h3>
-          <p class="text-gray-600 leading-relaxed">
-            Best practices, compliance insights and safety-first approaches
-            to ensure long-term electrical reliability.
-          </p>
-        </div>
+<section data-pagefind-ignore class="bg-gray-50 py-24 hidden">
+  <div class="container mx-auto px-6">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
 
-        <div>
-          <h3 class="text-xl font-semibold text-gray-900 mb-4">
-            Smart Living
-          </h3>
-          <p class="text-gray-600 leading-relaxed">
-            How smart wiring, automation and energy-efficient solutions
-            shape modern homes and workspaces.
-          </p>
-        </div>
-
-        <div>
-          <h3 class="text-xl font-semibold text-gray-900 mb-4">
-            Support & Guidance
-          </h3>
-          <p class="text-gray-600 leading-relaxed">
-            Installation tips, maintenance advice and expert answers
-            from the Bullette support team.
-          </p>
-        </div>
-
+      <!-- CARD -->
+      <div class="rounded-3xl bg-white p-8
+                  border border-gray-200
+                  hover:shadow-xl shadow-gray-200
+                  transition">
+        <h3 class="text-xl font-semibold text-gray-900 mb-4">
+          #Product Safety
+        </h3>
+        <p class="text-gray-600 leading-relaxed">
+          Best practices, compliance insights and safety-first approaches
+          to ensure long-term electrical reliability.
+        </p>
       </div>
-    </div>
-  </section>
 
-  <!-- ================= CTA ================= -->
-  <section class="bg-white py-20">
-    <div class="container mx-auto px-6">
-      <div class="rounded-3xl bg-gray-900 px-8 py-14 text-center text-white">
+      <div class="rounded-3xl bg-white p-8
+                  border border-gray-200
+                  hover:shadow-xl shadow-gray-200
+                  transition">
+        <h3 class="text-xl font-semibold text-gray-900 mb-4">
+          #Smart Living
+        </h3>
+        <p class="text-gray-600 leading-relaxed">
+          How smart wiring, automation and energy-efficient solutions
+          shape modern homes and workspaces.
+        </p>
+      </div>
+
+      <div class="rounded-3xl bg-white p-8
+                  border border-gray-200
+                  hover:shadow-xl shadow-gray-200
+                  transition">
+        <h3 class="text-xl font-semibold text-gray-900 mb-4">
+          #Support & Guidance
+        </h3>
+        <p class="text-gray-600 leading-relaxed">
+          Installation tips, maintenance advice and expert answers
+          from the Bullette support team.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section data-pagefind-ignore class="bg-white py-28">
+  <div class="container mx-auto px-6">
+
+    <div class="relative">
+
+      <!-- TOP LEFT PILLS -->
+      <div
+        class="absolute -top-5 right-10
+               flex gap-3
+               z-20"
+      >
+        <span
+          class="px-4 py-2
+                 h-10
+                 flex items-center
+                 rounded-full
+                 bg-white
+                 text-sm font-medium text-red-600
+                 border border-gray-200
+                 shadow-md"
+        >
+          #Product Safety
+        </span>
+
+        <span
+          class="px-4 py-2
+                 h-10
+                 flex items-center
+                 rounded-full
+                 bg-white
+                 text-sm font-medium text-red-600
+                 border border-gray-200
+                 shadow-md"
+        >
+          #Smart Living
+        </span>
+                <span
+          class="px-4 py-2
+                 h-10
+                 flex items-center
+                 rounded-full
+                 bg-white
+                 text-sm font-medium text-red-600
+                 border border-gray-200
+                 shadow-md"
+        >
+          #Support & Guidance
+        </span>
+
+        <span
+          class="px-4 py-2
+                 h-10
+                 flex items-center
+                 rounded-full
+                 bg-white
+                 text-sm font-medium text-red-600
+                 border border-gray-200
+                 shadow-md"
+        >
+          #Expert Advice
+        </span>
+      </div>
+
+
+      <!-- CTA BLOCK -->
+      <div
+        class="relative overflow-hidden
+               rounded-4xl
+               bg-[url('/bg/555.jpg')] bg-cover bg-center
+               px-10 sm:px-14 py-18
+               text-center text-white
+               z-10"
+      >
         <h3 class="text-2xl sm:text-3xl font-semibold">
           Looking for Expert Guidance?
         </h3>
-        <p class="mt-4 text-gray-300 max-w-xl mx-auto">
+
+        <p class="mt-6 text-gray-300 max-w-xl mx-auto leading-relaxed">
           Connect with our team for reliable advice, support and product
           recommendations.
         </p>
-        <a
-          href="/contact"
-          class="inline-flex mt-8 items-center gap-3
-                 bg-red-600 px-8 py-4 rounded-full
-                 font-medium hover:bg-red-700 transition"
-        >
-          Contact Bullette →
-        </a>
+
+        <div class="mt-10">
+          <a
+            href="/contact"
+            class="group inline-flex items-center
+                   h-14
+                   pl-8 pr-2
+                   rounded-full
+                   bg-white text-red-600
+                   text-base font-medium
+                   transition-colors
+                   hover:bg-black hover:text-white"
+          >
+            <span class="mr-5">Connect Us</span>
+
+            <span
+              class="flex items-center justify-center
+                     w-11 h-11
+                     rounded-full
+                     bg-red-600"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="w-5 h-5 text-white"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M5 12h14M13 5l7 7-7 7"
+                />
+              </svg>
+            </span>
+          </a>
+        </div>
       </div>
+
     </div>
-  </section>
+  </div>
+</section>
+
+
+
+
+
 
   <Footer />
 </Layout>

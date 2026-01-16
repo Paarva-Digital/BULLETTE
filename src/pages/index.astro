@@ -102,15 +102,18 @@ const home = await sanity.fetch(`
 
 <Layout>
   <Navbar />
-  <HeroSwiper slides={home.heroSlides ?? []} />
-  <Subnav />
-  <ProductList categories={home.productCategories ?? []} />
-  <NewAbtSec />
-  <FtdProducts section={home.ftdProducts} />
-  <WhyChooseUs />
-  <NeedHelp />
-  <BlogLinks section={home.blogSection} />
-  <SocialFeed section={home.socialFeed} />
-  <Cta />
+  <!-- Exclude homepage content from Pagefind; search should only show product detail pages -->
+  <main data-pagefind-ignore>
+    <HeroSwiper slides={home.heroSlides ?? []} />
+    <Subnav />
+    <ProductList categories={home.productCategories ?? []} />
+    <NewAbtSec />
+    <FtdProducts section={home.ftdProducts} />
+    <WhyChooseUs />
+    <NeedHelp />
+    <BlogLinks section={home.blogSection} />
+    <SocialFeed section={home.socialFeed} />
+    <Cta />
+  </main>
   <Footer />
 </Layout>

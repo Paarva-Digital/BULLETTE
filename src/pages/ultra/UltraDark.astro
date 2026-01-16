@@ -1,0 +1,329 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import NavBarUltra from '@/components/Ultra/NavBarUltra.astro';
+import { sanity } from '@/sanity/lib/sanity';
+import FooterUltra from '@/components/Ultra/FooterUltra.astro';
+
+const ultraProducts = await sanity.fetch(`
+  *[_type == "ultraProduct"] | order(status asc) {
+    title,
+    slug,
+    status,
+    description,
+    specs,
+    "image": heroImage.asset->url
+  }
+`);
+---
+
+<Layout>
+  <NavBarUltra />
+
+  <main
+    class="relative min-h-screen bg-[#0a0a0a] text-[#f5f5f5]
+           overflow-hidden selection:text-white"
+  >
+<div
+  class="fixed inset-0 pointer-events-none
+         z-[1]
+         bg-[radial-gradient(circle_at_top,#1c1c1c_0%,#000_70%)]
+         opacity-[0.8]"
+></div>
+
+
+
+    <!-- ================= HERO ================= -->
+    <section class="relative z-10 px-6 pt-56 pb-32 text-center">
+     
+      <div class="max-w-4xl mx-auto">
+       <span class="inline-block mb-10 text-[11px] sm:text-lg
+             tracking-[0.45em] uppercase
+             bg-gradient-to-r from-[#b1121f] via-[#d14a1f] to-[#f27c1c]
+             bg-clip-text text-transparent">
+  Bullette · Ultra Series
+</span>
+
+
+
+<h1 class="text-5xl sm:text-6xl xl:text-7xl font-semibold leading-[1.03]">
+  Engineered for People<br />
+  <span class="inline-block bg-gradient-to-r
+               from-[#f70015] via-[#f70015] via-[#d61b1b] to-[#ffffff]
+               bg-clip-text text-transparent">
+    Who Never Compromise on Details
+  </span>
+</h1>
+
+
+
+
+
+        <p class="mt-10 max-w-2xl mx-auto text-lg text-[#9a9a9a] leading-relaxed">
+          Ultra is Bullette’s professional-grade lineup — engineered for installers, contractors, and long-term operational reliability.
+        </p>
+
+        <div class="mt-14 flex justify-center gap-8">
+
+  <!-- PRIMARY (Transparent Red) -->
+  <a
+    href="/products"
+    class="group inline-flex items-center
+           h-12
+           pl-6 pr-1
+           rounded-full
+           border border-white/25
+           text-white
+           text-xs sm:text-sm
+           tracking-[0.2em] uppercase
+           transition-all duration-300
+           hover:border-[#c1121f]/60"
+  >
+    <!-- TEXT -->
+    <span class="mr-4">
+      View Products
+    </span>
+
+    <!-- ARROW CIRCLE -->
+    <span
+      class="flex items-center justify-center
+             w-10 h-10
+             rounded-full
+             border border-white/25
+             bg-transparent
+             transition-all duration-300
+             group-hover:border-[#c1121f]/60"
+      aria-hidden
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="w-4 h-4
+               text-white
+               transition-colors duration-300
+               group-hover:text-[#c1121f]"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+        stroke-width="2"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M5 12h14M13 5l7 7-7 7"
+        />
+      </svg>
+    </span>
+  </a>
+
+  <!-- SECONDARY (Softer Transparent) -->
+  <a
+    href="#vision"
+    class="group inline-flex items-center
+           h-12
+           pl-6 pr-1
+           rounded-full
+           border border-white/25
+           text-white
+           text-xs sm:text-sm
+           tracking-[0.2em] uppercase
+           transition-all duration-300
+           hover:border-[#c1121f]/60"
+  >
+    <!-- TEXT -->
+    <span class="mr-4">
+      Why Ultra
+    </span>
+
+    <!-- ARROW CIRCLE -->
+    <span
+      class="flex items-center justify-center
+             w-10 h-10
+             rounded-full
+             border border-white/25
+             bg-transparent
+             transition-all duration-300
+             group-hover:border-[#c1121f]/60"
+      aria-hidden
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="w-4 h-4
+               text-white
+               transition-colors duration-300
+               group-hover:text-[#c1121f]"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+        stroke-width="2"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M5 12h14M13 5l7 7-7 7"
+        />
+      </svg>
+    </span>
+  </a>
+
+</div>
+
+
+
+      </div>
+      
+    </section>
+
+    <!-- SECTION DIVIDER -->
+    <div class="mx-auto w-[92%] h-px bg-white/10"></div>
+
+
+    
+    <!-- ================= PRODUCTS ================= -->
+    <section class="relative z-10 px-6 py-32">
+      <div class="max-w-7xl mx-auto">
+        <div class="mb-24 text-center">
+          <h2 class="text-4xl md:text-5xl font-semibold">
+            Ultra Professional Line
+          </h2>
+          <p class="mt-6 max-w-2xl mx-auto text-[#9a9a9a]">
+            Precision-engineered electrical components built for
+            demanding environments.
+          </p>
+        </div>
+
+        <div
+  class="grid gap-20
+         grid-cols-1
+         sm:grid-cols-2
+         lg:grid-cols-3
+         place-items-center
+         sm:place-items-stretch"
+>
+  {ultraProducts.map((product) => (
+    <div
+      class="relative border rounded-4xl overflow-hidden
+             border-white/10 backdrop-blur-sm
+             w-full max-w-[360px]
+             sm:max-w-none"
+    >
+      
+      <!-- IMAGE -->
+      <div class="relative flex items-center justify-center p-5 bg-[#111111]">
+        {product.image && (
+          <img
+            src={product.image}
+            alt={product.title}
+            class="max-h-64 object-contain"
+          />
+        )}
+      </div>
+
+      <!-- CONTENT -->
+      <div class="px-8 py-10">
+        <span class="block text-[11px] tracking-[0.25em] font-semibold text-xl uppercase bg-linear-to-r from-[#b1121f] via-[#d14a1f] to-[#f27c1c]
+             bg-clip-text text-transparent">
+          {product.status}
+        </span>
+
+        <h3 class="mt-4 text-2xl font-medium">
+          {product.title}
+        </h3>
+
+        <p class="mt-4 text-sm text-[#9a9a9a] leading-relaxed max-w-sm">
+          {product.description}
+        </p>
+
+        <!-- SPECS -->
+        {product.specs && (
+          <div class="mt-6 space-y-2 text-sm">
+            {product.specs.map((spec) => (
+              <div class="flex justify-between border-b border-white/10 pb-2">
+                <span class="text-[#9a9a9a]">{spec.label}</span>
+                <span class="text-white">{spec.value}</span>
+              </div>
+            ))}
+          </div>
+        )}
+
+        <!-- CTA -->
+        <a
+  href={`/ultra/${product.slug.current}`}
+  class="group inline-flex items-center gap-3 mt-8
+         text-xs tracking-[0.2em] uppercase
+         text-white border-b border-[#c1121f]
+         hover:text-[#c1121f] transition"
+>
+  View Details
+
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    fill="none"
+    class="w-4 h-4
+           transition-transform duration-300"
+  >
+    <path
+      d="M4 12H19"
+      stroke="currentColor"
+      stroke-width="1.5"
+      stroke-linecap="round"
+    />
+    <path
+      d="M14 7L19 12L14 17"
+      stroke="currentColor"
+      stroke-width="1.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+  </svg>
+</a>
+
+      </div>
+    </div>
+  ))}
+</div>
+      </div>
+    </section>
+
+    <!-- ================= WHY ULTRA ================= -->
+    <section
+      id="vision"
+      class="relative z-10 px-6 py-32 bg-[#0e0e0e]"
+    >
+      <div class="max-w-7xl mx-auto">
+        <h2 class="text-4xl md:text-5xl font-semibold mb-20 text-center">
+          Why Bullette Ultra
+        </h2>
+
+        <div class="grid md:grid-cols-3 gap-20">
+          <div>
+            <span class="text-[#c1121f] text-4xl xl:text-7xl">01</span>
+            <h3 class="mt-4 text-3xl font-medium">Installer-Centric Design</h3>
+            <p class="mt-4 text-sm lg:text- text-[#9a9a9a] leading-relaxed">
+              Designed with real-world installers for clarity,
+              ergonomics, and effortless usability.
+            </p>
+          </div>
+
+          <div>
+            <span class="text-[#c1121f] text-4xl xl:text-7xl">02</span>
+            <h3 class="mt-4 text-3xl font-medium">Real-World Testing</h3>
+            <p class="mt-4 text-sm lg:text- text-[#9a9a9a] leading-relaxed">
+              Every component is tested under heat, load,
+              and time-based stress conditions.
+            </p>
+          </div>
+
+          <div>
+            <span class="text-[#c1121f] text-4xl xl:text-7xl">03</span>
+            <h3 class="mt-4 text-3xl font-medium">Engineered Longevity</h3>
+            <p class="mt-4 text-sm lg:text- text-[#9a9a9a] leading-relaxed">
+              Premium materials and strict tolerances ensure
+              consistent performance year after year.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <FooterUltra />
+</Layout>

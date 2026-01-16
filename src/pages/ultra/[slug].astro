@@ -1,0 +1,131 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import NavBarUltra from '@/components/Ultra/NavBarUltra.astro';
+import { sanity } from '@/sanity/lib/sanity';
+import FooterUltra from '@/components/Ultra/FooterUltra.astro';
+
+export async function getStaticPaths() {
+  const products = await sanity.fetch(`
+    *[_type == "ultraProduct"] {
+      slug
+    }
+  `);
+
+  return products.map((p: any) => ({
+    params: { slug: p.slug.current },
+  }));
+}
+
+const { slug } = Astro.params;
+
+const product = await sanity.fetch(`
+  *[_type == "ultraProduct" && slug.current == $slug][0]{
+    title,
+    description,
+    specs,
+    "image": heroImage.asset->url
+  }
+`, { slug });
+---
+
+<Layout>
+  <NavBarUltra />
+
+  <main class="bg-[#0a0a0a] max-h-screen text-white px-6 py-32">
+    <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-20">
+
+      <div class="flex items-center justify-center bg-[#111111] p-16 rounded-3xl">
+        {product.image && (
+          <img src={product.image} alt={product.title} class="max-h-96" />
+        )}
+      </div>
+
+      <div>
+        <h1 class="text-5xl font-semibold">
+          {product.title}
+        </h1>
+
+        <p class="mt-8 text-[#9a9a9a] max-w-xl">
+          {product.description}
+        </p>
+
+        <div class="mt-10 space-y-3">
+          {product.specs?.map(spec => (
+            <div class="flex justify-between border-b border-white/10 pb-2">
+              <span class="text-[#9a9a9a]">{spec.label}</span>
+              <span>{spec.value}</span>
+            </div>
+          ))}
+        </div>
+        <!-- ENQUIRY FORM -->
+<div class="mt-14 rounded-3xl border border-white/10 bg-[#0f0f0f] p-8">
+  <h3 class="text-2xl font-semibold mb-2">
+    Enquire on WhatsApp
+  </h3>
+
+  <p class="text-sm text-[#9a9a9a] mb-6 max-w-md">
+    Get instant details, pricing, and availability directly on WhatsApp.
+  </p>
+
+<form
+  data-product={product.title}
+  onsubmit="return handleWhatsApp(this)"
+  class="space-y-4"
+>
+
+
+
+    <input
+      type="text"
+      name="name"
+      placeholder="Your name"
+      class="w-full rounded-xl bg-[#111111] border border-white/10 px-4 py-3
+             text-sm placeholder:text-[#666] focus:outline-none focus:border-red-600"
+    />
+
+    <textarea
+      name="message"
+      rows="4"
+      placeholder="Your message (optional)"
+      class="w-full rounded-xl bg-[#111111] border border-white/10 px-4 py-3
+             text-sm placeholder:text-[#666] focus:outline-none focus:border-red-600"
+    ></textarea>
+
+    <button
+      type="submit"
+      class="w-full h-12 rounded-full
+             bg-red-600 text-white font-semibold
+             hover:bg-red-500 transition"
+    >
+      Enquire via WhatsApp
+    </button>
+  </form>
+</div>
+
+      </div>
+      
+
+    </div>
+  </main>
+  <FooterUltra />
+</Layout>
+
+
+<script>
+  window.handleWhatsApp = function (form) {
+    const name = form.name.value || 'Hi';
+    const message = form.message.value || '';
+
+    const text = encodeURIComponent(
+      `${name} is enquiring about ${form.dataset.product}.\n\n${message}`
+    );
+
+    window.open(
+      `https://wa.me/917510525928?text=${text}`,
+      '_blank'
+    );
+
+    return false; // IMPORTANT
+  };
+</script>
+
